@@ -1,0 +1,54 @@
+[Breakpoint 0]
+Enabled=true
+File=lib/sas_native.c
+Line=185
+Temporary=false
+
+[Breakpoint 1]
+Enabled=true
+File=lib/premcce.c
+Line=507
+Temporary=false
+
+[Breakpoint 2]
+Enabled=true
+File=lib/premcce.c
+Line=483
+Temporary=false
+
+[Breakpoint 3]
+Enabled=true
+File=mcce.c
+Line=41
+Temporary=false
+
+[Breakpoint 4]
+Enabled=true
+File=lib/energies.c
+Line=326
+Temporary=false
+
+[Breakpoint 5]
+Enabled=true
+File=lib/make_matrices.c
+Line=138
+Temporary=false
+
+[General]
+DebuggerCmdStr=
+DriverName=GDB
+FileVersion=1
+OptionsSelected=
+ProgramArgs=
+TTYLevel=7
+WorkingDirectory=/home/jmao/proj/rxn-sas/
+
+[Memory]
+ColumnWidths=80,86
+Expression1=0xbffff0e0
+Format1=19
+NumExprs=1
+
+[Watches]
+Expr0=ematrix
+Expr1=fname

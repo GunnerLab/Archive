@@ -1,0 +1,60 @@
+CONFLIST CUA        CUABK CUA01 CUA+1 CUA+2 
+
+NATOM    CUABK      0
+NATOM    CUA01      1
+NATOM    CUA+1      1
+NATOM    CUA+2      1
+
+IATOM    CUA01 CU   0
+IATOM    CUA+1 CU
+  0
+IATOM    CUA+2 CU
+  0
+
+ATOMNAME CUA01    0 CU  
+ATOMNAME CUA+1    0 CU
+
+ATOMNAME CUA+2    0 CU
+
+
+
+  0
+  0
+
+
+
+#1.Basic Conformer Information: name, pka, em, rxn.
+#23456789A123456789B123456789C
+PROTON   CUA01      0
+PKA      CUA01      0.0
+ELECTRON CUA01      0
+EM       CUA01      0.0
+RXN      CUA01      0
+
+PROTON   CUA+1      0  
+PKA      CUA+1      0.0
+ELECTRON CUA+1      1  
+EM       CUA+1      0.0
+RXN      CUA+1      0  
+
+PROTON   CUA+2      0
+PKA      CUA+2      0.0
+ELECTRON CUA+2      2
+EM       CUA+2      0.0
+RXN      CUA+2      0
+
+#2.Structure Connectivity
+#23456789A123456789B123456789C123456789D123456789E123456789F123456789G123456789H123456789I
+CONNECT  CUA01 CU   
+CONNECT  CUA+1 CU
+CONNECT  CUA+2 CU
+
+#3.Atom Parameters: Partial Charges and Radii
+# Radii(vdw) were collected from http://www.webelements.com/
+RADIUS   CUA01 CU   1.45
+RADIUS   CUA+1 CU   0.96
+RADIUS   CUA+2 CU   0.73
+
+CHARGE   CUA01 CU   0.00
+CHARGE   CUA+1 CU   1.00
+CHARGE   CUA+2 CU   2.00

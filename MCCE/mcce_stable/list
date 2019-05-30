@@ -1,0 +1,13 @@
+bin/
+param04/
+param08/
+name.txt
+extra04.tpl
+extra08.tpl
+run.prm.quick
+run.prm.default
+run.prm.full
+
+When making distro, 
+1. Correct Python
+2. Correct run.prm paths?

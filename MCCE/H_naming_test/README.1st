@@ -1,0 +1,29 @@
+H atom naming rule -- adopted from PDB 
+
+Hydrogen Atoms
+
+In brief, conventions for hydrogen atoms in version 3.0 PDB format are as follows:
+
+Hydrogen atom records follow the records of all other atoms of a particular residue.
+A hydrogen atom name starts with H. The next part of the name is based on the name of the connected nonhydrogen atom. For example, in amino acid residues, H is followed by the remoteness indicator (if any) of the connected atom, followed by the branch indicator (if any) of the connected atom; if more than one hydrogen is connected to the same atom, an additional digit is appended so that each hydrogen atom will have a unique name. Hydrogen atoms in standard nucleotides and amino acids (other than the rarely seen HXT) are named according to the IUPAC recommendations (Pure Appl Chem 70:117 (1998) [abstract] [PDF]). Names of hydrogen atoms in HETATM residues are determined in a similar fashion.
+If the name of a hydrogen has four characters, it is left-justified starting in column 13; if it has fewer than four characters, it is left-justified starting in column 14.
+In the following excerpt from entry 1vm3, atom H is attached to atom N. Atom HA is attached to atom CA; the remoteness indicator A is the same for these atoms. Two hydrogen atoms are connected to CB, one is connected to CG, three are connected to CD1, and three are connected to CD2.
+ATOM     10  N   LEU A   2       4.595   6.365   3.756  1.00  0.00           N
+ATOM     11  CA  LEU A   2       4.471   5.443   2.633  1.00  0.00           C
+ATOM     12  C   LEU A   2       5.841   5.176   2.015  1.00  0.00           C
+ATOM     13  O   LEU A   2       6.205   4.029   1.755  1.00  0.00           O
+ATOM     14  CB  LEU A   2       3.526   6.037   1.578  1.00  0.00           C
+ATOM     15  CG  LEU A   2       2.790   4.919   0.823  1.00  0.00           C
+ATOM     16  CD1 LEU A   2       3.803   3.916   0.262  1.00  0.00           C
+ATOM     17  CD2 LEU A   2       1.817   4.196   1.769  1.00  0.00           C
+ATOM     18  H   LEU A   2       4.169   7.246   3.704  1.00  0.00           H
+ATOM     19  HA  LEU A   2       4.063   4.514   2.992  1.00  0.00           H
+ATOM     20  HB2 LEU A   2       2.804   6.675   2.065  1.00  0.00           H
+ATOM     21  HB3 LEU A   2       4.099   6.623   0.873  1.00  0.00           H
+ATOM     22  HG  LEU A   2       2.234   5.353   0.004  1.00  0.00           H
+ATOM     23 HD11 LEU A   2       4.648   4.447  -0.148  1.00  0.00           H
+ATOM     24 HD12 LEU A   2       3.334   3.331  -0.516  1.00  0.00           H
+ATOM     25 HD13 LEU A   2       4.137   3.260   1.052  1.00  0.00           H
+ATOM     26 HD21 LEU A   2       0.941   3.892   1.216  1.00  0.00           H
+ATOM     27 HD22 LEU A   2       1.522   4.860   2.568  1.00  0.00           H
+ATOM     28 HD23 LEU A   2       2.296   3.323   2.188  1.00  0.00           H

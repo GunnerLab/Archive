@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="mcce2.7" />
+		<Option makefile_is_custom="1" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="bin/mcce">
+				<Option output="bin/mcce" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="lib/assign_crg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/assign_rad.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/check_tpl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/cmp_conf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/collect_connect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/coulomb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/coulomb_conf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/cpy_conf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/cpy_prot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/cpy_res.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/db.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/del_conf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/del_dir.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/del_prot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/del_res.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/energies.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/free_strings.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/geom.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/get_connect12.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/get_files.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/get_vdw0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/get_vdw1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/hbond_extra.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/id_conf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/ins_conf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/ins_res.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/load_all_param.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/load_param.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/load_pdb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/make_matrices.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/mcce.h" />
+		<Unit filename="lib/monte.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/monte2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/new_prot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/pdbline2atom.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/premcce.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/quick_e.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/ran2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/relax_h.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/relax_water.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/relaxation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/rotamers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/sas_native.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/shuffle_n.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/sort_conf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/sort_res.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/strip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/surfw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/swap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/torsion.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/vdw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/vdw_conf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/vdw_fast.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/write_pdb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mcce.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

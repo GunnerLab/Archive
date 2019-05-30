@@ -1,0 +1,8 @@
+Todo:
+
+1. db.c to use in memory parameter functions
+2. geom.c in integrate all geometry operations
+3. in memory function to run delphi
+4. un-compressed pw table output in step 3
+5. un-compressed pw input in step 4
+

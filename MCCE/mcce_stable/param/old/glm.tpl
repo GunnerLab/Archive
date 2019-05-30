@@ -1,0 +1,106 @@
+CONFLIST GLM        GLMBK GLM01 
+
+NATOM    GLMBK      6
+NATOM    GLM01      11
+
+IATOM    GLMBK  N   0
+IATOM    GLMBK  H   1
+IATOM    GLMBK  CA  2
+IATOM    GLMBK  HA  3
+IATOM    GLMBK  C   4
+IATOM    GLMBK  O   5
+IATOM    GLM01  CB  0
+IATOM    GLM01 1HB  1
+IATOM    GLM01 2HB  2
+IATOM    GLM01  CG  3
+IATOM    GLM01 1HG  4
+IATOM    GLM01 2HG  5
+IATOM    GLM01  CD  6
+IATOM    GLM01  OE1 7
+IATOM    GLM01  NE2 8
+IATOM    GLM01 1HE2 9
+IATOM    GLM01 2HE2 10
+
+ATOMNAME GLMBK    0  N  
+ATOMNAME GLMBK    1  H  
+ATOMNAME GLMBK    2  CA 
+ATOMNAME GLMBK    3  HA 
+ATOMNAME GLMBK    4  C  
+ATOMNAME GLMBK    5  O  
+ATOMNAME GLM01    0  CB 
+ATOMNAME GLM01    1 1HB 
+ATOMNAME GLM01    2 2HB 
+ATOMNAME GLM01    3  CG 
+ATOMNAME GLM01    4 1HG 
+ATOMNAME GLM01    5 2HG 
+ATOMNAME GLM01    6  CD 
+ATOMNAME GLM01    7  OE1
+ATOMNAME GLM01    8  NE2
+ATOMNAME GLM01    9 1HE2
+ATOMNAME GLM01   10 2HE2
+
+
+
+
+
+
+#1.Basic Conformer Information: name, pka, em, rxn.
+#23456789A123456789B123456789C
+PROTON   GLM01      0
+PKA      GLM01      0.0
+ELECTRON GLM01      0
+EM       GLM01      0.0
+RXN      GLM01      -10.0
+
+#2.Structure Connectivity
+#23456789A123456789B123456789C123456789D123456789E123456789F123456789G123456789H123456789I
+CONNECT  GLMBK  N   sp2       -1    C   0     CA  0     H
+CONNECT  GLMBK  H   s         0     N
+CONNECT  GLMBK  CA  sp3       0     N   0     C   0     CB  0     HA
+CONNECT  GLMBK  HA  s         0     CA
+CONNECT  GLMBK  C   sp2       0     CA  0     O   1     N
+CONNECT  GLMBK  O   sp2       0     C
+CONNECT  GLM01  CB  sp3       0     CA  0     CG  0    1HB  0    2HB
+CONNECT  GLM01 1HB  s         0     CB
+CONNECT  GLM01 2HB  s         0     CB
+CONNECT  GLM01  CG  sp3       0     CB  0    CD   0    1HG  0    2HG
+CONNECT  GLM01 1HG  s         0     CG
+CONNECT  GLM01 2HG  s         0     CG
+CONNECT  GLM01  CD  sp2       0     CG  0     OE1 0     NE2
+CONNECT  GLM01  OE1 sp2       0     CD
+CONNECT  GLM01  NE2 sp2       0     CD  0    1HE2 0    2HE2
+CONNECT  GLM01 1HE2 s         0     NE2
+CONNECT  GLM01 2HE2 s         0     NE2
+#23456789A123456789B123456789C123456789D123456789E123456789F123456789G123456789H123456789I
+H_DIHED  GLMBK  1    H    N    CA   C   60
+H_DIHED  GLM01  1   1HE2  NE2  CD   CG  0
+
+ACCEPTOR GLM01  1    CD - OE1
+DONOR    GLM01  1    NE2-1HE2
+DONOR    GLM01  2    NE2-2HE2
+
+#3.Atom Parameters: Partial Charges and Radii
+# Radii from "Bondi, J.Phys.Chem., 68, 441, 1964."
+RADIUS   GLM    N   1.55
+RADIUS   GLM    H   1.20
+RADIUS   GLM    CA  1.70
+RADIUS   GLM    HA  1.20
+RADIUS   GLM    C   1.70
+RADIUS   GLM    O   1.52
+RADIUS   GLM    CB  1.70
+RADIUS   GLM   1HB  1.20
+RADIUS   GLM   2HB  1.20
+RADIUS   GLM    CG  1.70
+RADIUS   GLM   1HG  1.20
+RADIUS   GLM   2HG  1.20
+RADIUS   GLM    CD  1.70
+RADIUS   GLM    OE1 1.52
+RADIUS   GLM    NE2 1.55
+RADIUS   GLM   1HE2 1.20
+RADIUS   GLM   2HE2 1.20
+
+#=========================================================================
+#        GRP   #      BOND     AFFECTED_ATOMS
+#123456789012345678901234567890
+#-------|---|----|-|---------|----|----|----|----|----|----|----|----|----
+#=========================================================================

@@ -1,0 +1,177 @@
+Prepare a parameter file for a new cofactor 
+
+       A parameter file (tpl file) defines the cofactor structure such as 
+connectivity,  physics properties such as atom sizes and charges, chemistry 
+properties such as  the pKa values, and instructions of making rotamers. The
+file must have extention ".tpl" to be effective.
+
+       This section is a description about how to make a new tpl file. Two parts 
+are included, part I will show you how to make a new tpl file without charge 
+part, and part II will show how to make charge part.
+
+
+Part I : Make a tpl file
+
+       First of all, in order to make a tpl file, a pdb file is needed. 
+You should make a directory to run mcce program. For more details, you can do that 
+as following:
+
+1.  Copy run.prm file and the pdb file (e.g. Let's say abcd.pdb) to your new local directory. 
+2.  Edit run.prm:  put the right pdb name (abcd.pdb), change the pathway of the name.txt file 
+    to your local directory, and set to ready to run step1 only.
+
+    For example, here is the first part of one run.prm file to run  abcd.pdb
+
+MCCE CONFIGURATION FILE...
+
+Input and Output:
+abcd.pdb                                                     (INPDB)*
+param                                                        (PARAM)*
+debug.log                                                    (DEBUG_LOG)
+new.tpl     local parameter file for unrecognized res        (NEWTPL)
+
+Steps:
+t        step 1: pre-run, pdb-> mcce pdb                     (DO_PREMCCE)*
+t        step 2: make rotatmers                              (DO_ROTAMERS)*
+f        step 3: do energy calculations                      (DO_ENERGY)*
+f        step 4: monte carlo sampling                        (DO_MONTE)*
+...
+
+step 1:
+name.txt MCCE renaming rule.                                 (RENAME_RULES)*
+
+
+t        Label terminal residues?                            (TERMINALS)
+->
+f        Label terminal residues?                            (TERMINALS)
+
+
+2.0      distance limit of reporting clashes                 (CLASH_DISTANCE)
+0.2      cut off water if % SAS exceeds this number          (H2O_SASCUTOFF)
+
+
+
+
+3. Edit the name.txt file in the same directory. You should convert all atoms into 
+   the same residue name, the same chain ID and the same residue number. Please follow 
+   the format of pdb files. look up more details in the following link: 
+http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html
+
+Here is an example of file "name.txt":
+...
+####_###_#_###  ####_###_#_###
+*D************  *H************      rename all atom D to H
+***** CU A 005  *****CUB*A*005
+*****HIS A 284  a****CUB*A*005
+*****HIS A 333  b****CUB*A*005
+*****HIS A 334  c****CUB*A*005
+1****HIS A 284  1****CUB*A*005
+2****HIS A 284  2****CUB*A*005
+
+
+4. Now run mcce program:  $mcce &    It will take a short time to get results in step1_out.pdb. 
+   Check this file to make sure all atoms are converted and loaded. The other logout files are
+   helpful when you check and analysis the results. The main logout file (default one is run.log) 
+   will tell you the status of the work. Debug.log is the necessary file to check if the work 
+   is not finished. Repeat the step until it is done. Then look into new.tpl file. 
+   In this file, the guessed connectivity part is presented.
+Note:
+1). The guessed connectivity part is not the final one. You have to   
+    check that with the real structure, and correct that. First, check 
+    the hydrogens. Sometimes, hydrogens are missing in the structure 
+    connectivity part, you can edit the file and add the hydrogen in the 
+    line of covalent-bonded atom. Second, Add ligands connectivity  
+    for  sidechain atoms if they are not shown. e.g. you should put the 
+    connectivity CA with the atom CB, although the backbone atom CA is 
+    not shown in that conformer.
+2). You do not have to edit the CONFLIST, NATOM, IATOM and 
+    ATOMNAME parts. Actually, it will be corrected later once     
+    you have the right connectivity part.
+
+5. Use the program mk_iatom to make CONFLIST, NATOM,  
+   IATOM and ATOMNAME parts.  You will see a new tpl file is   
+   created, which is complete except the radius and charge part.
+
+6. Put this new tpl file into param directory (your local param 
+   directory is recommended). Remove the file "new.tpl" in the current directory
+   Then run mcce (step1) again. If any warning message is found in the file 
+   "run.log" or "debug.log", follow the warning messages and restart mcce (step1)
+    until no warning message is shown.    
+
+Part II: Adding atomic charges into the tpl files.
+       Normally, if you know the structure and have a tpl file coming from Part I, you can do 
+the following to complete the tpl file. 
+
+1. Run mcce(step 1 and step 2), make sure you can get the file step1_out.pdb and step2_out.pdb.  
+
+2. Transfer the file format. Use program such as babel to transfer the format of an output 
+   file with atomic charges (e.g. the output files from program gaussian) to the pdb format. 
+   We can use this command to transfer formats in babel: $babel -i gauout abcd.log -o pdb abcd.pdb .
+
+3. Transfer the atom names. The program match_atoms can do most of the job. Run $match_atoms [file1]  [file2]. 
+  (File 1 is the file from last step showing the pdb format. File 2 is step1_out.pdb). This program will 
+  print the matching atomic informations one by one. Check the output file matched.pdb.
+Note: This is important to check the matching information (from   
+     the screen) with the real structure. Sometimes, if some small  
+     optimization have been done to the original pdb crystal    
+     structure to get charges in some programs, the matching  
+     information of proton in matched.pdb file may be not right.
+     In some other cases, some atoms will not be matched, check 
+     those atom names.
+
+3. Now you have the charge part from some other program, and  the pdb-format atom names. 
+   Try to use excel to match them. Paste this information into the tpl file in the following  
+   format:
+
+ #3.Atom Parameters: Partial Charges and Radii
+CHARGE   HEA01 aCB   -0.065
+CHARGE   HEA01 1HB    0.150
+CHARGE   HEA01 2HB    0.150
+CHARGE   HEA01 aCG   -0.283
+
+
+4.Now you can add the radius part also in tpl file following the following format:
+
+# Radii from "Bondi, J.Phys.Chem., 68, 441, 1964."
+RADIUS   HEA   FE   1.45
+RADIUS   HEA    CHA 1.80
+RADIUS   HEA    CHB 1.80
+RADIUS   HEA    CHC 1.80
+
+Part III. Get pKa, Em, charges and calculated energies.
+    After Part I and Part II, actually you are ready to run mcce now. First of all, you should put the
+new tpl file into your param directory. Then run mcce from step 1 to step 4 (modify run.prm file). 
+The files below are given to check charges, pKa, Em and pairwise interactions 
+
+results                                       files
+charges            ------------------------   sum_crg.out
+pKa                ------------------------   pK.out
+EM                 ------------------------   pK.out
+pairwise energies  ------------------------   ./energies/*.opp
+occupancy          ------------------------   fort.38
+residues surface   ------------------------   acc.res
+atom surface       ------------------------   acc.atm
+rotamer making     ------------------------   rot_stat
+
+Note: 
+Before running mcce program, if you want to calculate pKa or Em, you have to edit run.prm. 
+There is a line labeling ph or Eh in step4 of file run.prm. Compare the different below:
+
+...
+ph       "ph" fpr pH titration, "eh" for eh titration       (TITR_TYPE)
+0.0      Initial pH                                         (TITR_PH0)  
+1.0      pH interval                                        (TITR_PHD)
+0.0      Initial Eh                                         (TITR_EH0)
+30.0     Eh interval (in mV)                                (TITR_EHD)
+1        Number of titration points                         (TITR_STEPS)   
+...
+ 
+
+...
+eh       "ph" fpr pH titration, "eh" for eh titration       (TITR_TYPE)
+0.0      Initial pH                                         (TITR_PH0)  
+1.0      pH interval                                        (TITR_PHD)
+0.0      Initial Eh                                         (TITR_EH0)
+30.0     Eh interval (in mV)                                (TITR_EHD)
+1        Number of titration points                         (TITR_STEPS)   
+...

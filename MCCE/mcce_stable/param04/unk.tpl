@@ -1,0 +1,51 @@
+CONFLIST UNK        UNKBK 
+
+NATOM    UNKBK      7
+
+IATOM    UNKBK  N   0
+IATOM    UNKBK  H   1
+IATOM    UNKBK  CA  2
+IATOM    UNKBK 1HA  3
+IATOM    UNKBK 2HA  4
+IATOM    UNKBK  O   5
+IATOM    UNKBK  C   6
+
+ATOMNAME UNKBK    0  N  
+ATOMNAME UNKBK    1  H  
+ATOMNAME UNKBK    2  CA 
+ATOMNAME UNKBK    3 1HA 
+ATOMNAME UNKBK    4 2HA 
+ATOMNAME UNKBK    5  O  
+ATOMNAME UNKBK    6  C  
+
+
+
+
+#1.Basic Conformer Information: name, pka, em, rxn.
+#23456789A123456789B123456789C
+
+#2.Structure Connectivity
+#23456789A123456789B123456789C123456789D123456789E123456789F123456789G123456789H123456789I
+CONNECT  UNKBK  N   sp2       -1    C   0     CA  0     H
+CONNECT  UNKBK  H   s         0     N
+CONNECT  UNKBK  CA  sp3       0     N   0     C   0    1HA  0    2HA
+CONNECT  UNKBK 1HA  s         0     CA
+CONNECT  UNKBK 2HA  s         0     CA 
+CONNECT  UNKBK  O   sp2       0     C 
+CONNECT  UNKBK  C   sp2       0     CA  0     O   1     N
+
+#3.Atom Parameters: Partial Charges and Radii
+# Radii from "Bondi, J.Phys.Chem., 68, 441, 1964."
+RADIUS   UNK    N   1.50
+RADIUS   UNK    H   1.00
+RADIUS   UNK    CA  2.00
+RADIUS   UNK   1HA  0.00
+RADIUS   UNK   2HA  0.00
+RADIUS   UNK    O   1.40
+RADIUS   UNK    C   1.70
+
+CHARGE   UNKBK  N    -0.350
+CHARGE   UNKBK  H     0.250
+CHARGE   UNKBK  CA    0.100
+CHARGE   UNKBK  C     0.550
+CHARGE   UNKBK  O    -0.550
