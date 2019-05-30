@@ -1,0 +1,75 @@
+CC      = gcc
+CFLAGS  = -O3
+FF      = f77
+FFLAGS  = -O2 -N15 -N109 -W -DLINUX -s
+#LFLAGS  = -g -DLINUX
+LFLAGS  = -O3
+
+LIB     = mcce.a
+AR      = ar
+ARFLAGS = rvs
+
+
+SRC1     = mcce.c all.c       ddvv.c          geom_3v_onto_3v.c  ins_res.c         strip.c\
+app.c       del_conf.c      geom_apply.c       line_2v.c         vdotv.c\
+avv.c       del_prot.c      geom_inverse.c     load_all_param.c  vector_normalize.c\
+avvvv.c     del_res.c       geom_move.c        load_param.c      vector_vminusv.c\
+cpy_conf.c  det3.c          geom_reset.c       mxm4.c            vector_vplusv.c\
+cpy_prot.c  det4.c          geom_roll.c        new_prot.c        vector_vxv.c\
+cpy_res.c   dll.c           get_files.c        param_get.c	param_exist.c\
+db_close.c  dvv.c           iatom.c            param_sav.c\
+db_open.c   free_strings.c  ins_conf.c         plane_3v.c pdbline2atom.c\
+premcce.c init.c load_pdb.c write_pdb.c   rotamers.c assign_rad.c get_connect12.c\
+surfw.c   vdw.c vdw_conf.c  shuffle_n.c  cmp_conf.c  sort_conf.c	sort_res.c	 id_conf.c\
+energies.c  assign_crg.c    coulomb.c   coulomb_conf.c\
+get_vdw0.c  get_vdw1.c      relax_water.c      relax_h.c monte.c monte2.c  ran2.c\
+relaxation.c collect_connect.c  torsion.c	vdw_fast.c hbond_extra.c swap.c quick_e.c\
+sas_native.c	check_tpl.c zip.c del_dir.c make_matrices.c
+
+SRC2     = elb.f up.f cent4.f rent4.f \
+ phintp4.f scaler4.f setbc4.f conplt.f itit4j.f \
+ wrteps4b.f relfac4b.f react2.f clb.f setcrg.f setfcrg.f nitit.f \
+ anagrd4.f cputime.f setrc4d.f  rdiv.f chkcrg.f expand4.f \
+ anasurf.f rdlog4.f wrt4.f wrtprm.f  off4.f extrm.f wrtatd.f \
+ distrTOpoint.f wrtvisual.f extrmobjects.f\
+ nlener.f timef.f \
+ grdatm.f crgarr.f dbsfd.f  mkdbsf.f phicon.f wrtphi.f wrtsit4.f \
+ encalc4.f wrtgcrg.f  namlen3.f watput.f qinttot.f cfind4.f rfind4.f \
+ rdhrad.f  radass4.f crgass4.f ichash4.f irhash4.f rdhcrg.f \
+ form2.f  getatm2.f watpte.f omalt.f rforce.f  ts.f setout.f epsmak.f\
+ vwtms2.f scale.f indver.f sas.f  cube.f  msrf.f mkvtl.f ex.f fxhl.f wrtsurf.f
+
+SRC3    = qdiff4v.F objvertices.F distobj.F
+
+SRC4    = memalloc.c  creapdb.c
+
+OBJ1    = $(SRC1:.c=.o)
+OBJ2    = $(SRC2:.f=.o)
+OBJ3    = $(SRC3:.F=.o)
+OBJ4    = $(SRC4:.c=.o)
+
+HEADER  = mcce.h
+
+#$(OBJ1): $(HEADER)
+
+
+.F.o:
+	$(FC) $(FFLAGS) -c  $*.F
+.f.o:
+	$(FC) $(FFLAGS) -c  $*.f
+.c.o:
+	$(CC) $(CFLAGS) -c  $*.c
+
+$(LIB): $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)
+	$(AR) $(ARFLAGS) $(LIB) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)
+
+
+mcce_condor: $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)
+	condor_compile $(CC) $(LFLAGS) -o mcce_condor $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) \
+/opt/absoft/lib/libU77.a  /opt/absoft/lib/libV77.a /opt/absoft/lib/libfio.a \
+/opt/absoft/lib/libf90math.a -lz  -lgdbm -lm /opt/absoft/lib/libf77math.a  
+
+#-lefence
+
+clean:
+	rm *.o

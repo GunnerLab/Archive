@@ -1,0 +1,293 @@
+===========================================================
+<<< MCCE Multi-Conformation Continuum Electrostatics >>>   
+-----------------------------------------------------------
+Version:        2.7                                        
+Home Page:      http://pka.engr.ccny.cuny.edu/~mcce        
+Support:        jmao@ccny.cuny.edu                         
+Developed by:   Junjun Mao, Yifan Song, Marilyn Gunner     
+===========================================================
+Last Updates:                                              
+   03/23/2011  Two coding enhancement added to MCCE2.3     
+               In memory parameter loading                 
+               energy lookup table in text, non-0 only     
+===========================================================
+Step 0. Loading parameters
+   Load run control file "run.prm"...
+   Done
+
+   Tentatively load local param file "new.tpl"...   No such file, ignore.
+   Done
+
+   Load parameters from directory "/home/jmao/MCCE/mcce2.7/param08" ... 
+   Done
+
+   Load linear free energy correction parameters from "/home/jmao/MCCE/mcce2.7/extra.tpl".../home/jmao/MCCE/mcce2.7/extra.tpl
+   File loaded.
+   Done
+
+Step 0 Done.
+
+Step 1. Test and format structral file
+   Read pdb file "4PTI.pdb"...
+   Done
+
+   Read name rule file "/home/jmao/MCCE/mcce2.7/name.txt"...
+   Done
+
+   Rename residue and atom names...
+   Done
+
+   Identify NTR and CTR...
+      Labeling "ARG A   1" as NTR
+      Labeling "ALA A  58" as CTR
+   Done
+
+   Label backbone, sidechain and altLoc conformers...
+   Done
+
+   Load pdb lines into data structure...
+   Done
+
+   Strip water molecules with SAS >   5%...
+       54 water/salt molecules were stripped off in this round
+        2 water/salt molecules were stripped off in this round
+        0 water/salt molecules were stripped off in this round
+   Total deleted HOH = 56.
+   Done
+
+   Check missing heavy atoms and complete altLoc conformers...
+   Missing heavy atom  N  of conf ARGBK in "ARG A   1".
+   Missing heavy atom  CA  of conf ARGBK in "ARG A   1".
+   Missing heavy atom  C   of conf ALABK in "ALA A  58".
+   Missing heavy atom  O   of conf ALABK in "ALA A  58".
+   Missing heavy atoms detected.
+   Ignore warning messages if they are in the terminal residues
+   Done
+
+   Find distance clash (<2.000)...
+   d= 1.55: " CA  NTR A   1" to " CB  ARG A   1"
+   Done
+
+   Make connectivity network ...
+   Done.
+
+   Total time for step1 (premcce) is 1 seconds.
+
+   Output files:
+      step1_out.pdb         will be the input of step 2.
+      head1.lst             rotamer making control file for step 2
+      acc.atm               atom solvent accessible surface
+      acc.res               residue solvent accessible surface
+      head1.lst             rotamer making instruction, used in step2
+
+Step 1 Done.
+
+Step 2. Make multi side chain conformers
+   Load step 1 output file step1_out.pdb...
+   Done
+
+   Rotamer statistics is dynamically updated in file "rot_stat"
+
+   Remove redundant heavy atom conformers in step1_out.pdb
+   0 conformers were deleted.
+   Done
+
+
+   Relax crystal water..
+   Done
+
+   Prepare for rotamer making ...
+   Deleting H atoms...440 H atoms were deleted.
+   Assigning radii.
+   Estimating Solvent Accessible Surface (SAS).
+   Done.
+
+   Swap atoms...
+   Done
+
+
+
+   Delete duplicate conformers ... 0 conformers deleted.
+   Done
+
+   Prune rotamers by self VDW potential...
+   Creating connectivity table...
+   Computing self VDW potential. It may take a while...
+   Warning! assign_crg(): missing parameter(s), default value is used and saved in debug.log.
+   Pruning rotamers...0 rotamers deleted.
+   Done
+
+
+   Tuning exposed rotamers...
+   Done
+
+   Hydrogen bond directed rotamer making...
+   0 conformers are deleted to fit the limit (36) of derived conformer number
+   Updating self vdw
+   Pruning rotamers by new self energy...0 rotamers deleted.
+   Done. Time spent = 0
+
+
+   Repack side chains 5000 times, remove inaccessible conformers...
+   Computing pairwise LJ potential. This may take a while.
+      Estimated time on AMD 1.6GHz is 0 seconds.
+      Actual time is 0
+   Repacking in progress, see progress.log for details...
+   Done
+
+
+   Skip writing heavy atome rotamer pdb file hvrot.pdb
+   Making ionization conformers...
+   Done
+
+
+   Add H atoms...
+   Done
+
+
+   Optimizing hydroxyl and water...
+   Warning! assign_crg(): missing parameter(s), default value is used and saved in debug.log.
+   Total number of atoms 2443
+   Done
+
+
+   Sorting conformers...
+   Done
+
+   Skip writing full rotamer file step2_out.full.
+   Delete duplicate conformers ...
+      5 conformers deleted in this cycle
+   Done
+
+
+
+   Write output...
+   Done
+
+   Total time for step2 (rotamer making) is 25 seconds.
+
+   Output files:
+      step2_out.pdb   : mcce pdb file, the input of step 3
+      head2.lst       : conformer summary
+      step2_out.full  : rotamers without pairwise pruning.
+      hvrot.pdb       : heavy atom rotamers, can be used recursively by step 2
+
+Step 2 Done.
+
+Step 3. Compute energy lookup table
+   Load step 2 output file step2_out.pdb...
+   Done
+
+   Reporting non integer conformer charge ...
+   Passed, no non-integer charges
+   Done
+
+   Creating connectivity table...
+   Done
+
+   Preparing DelPhi runs at epsilon 8.00 ...
+      3 focusing runs required for this protein.
+   Done
+
+   Computing pairwise from conformer 1 to 326 of 326 total conformers
+      see progress.log for progress...
+   Done
+
+   Computing RXN from conformer 1 to 326 of 326 total conformers
+      see progress.log for progress...
+   Done
+
+   Add dummy conformers ... 4 dummy conformers were added.
+   Done
+
+   Making pairwise energy matrices and conformer summary ... 
+   WARNING: No EM entry for HOH01, set to 0.
+   WARNING: No EM entry for HOHDM, set to 0.
+   Done
+
+   Skiping writing step 3 rotamer file step3_out.pdb.
+   Total time for step3 (energy calculation) is 1873 seconds.
+
+   Output files (epsilon = 8.00):
+      energies.opp    : energy lookup table, use opp to decode the file
+      head3.lst       : conformer summary
+
+Step 3 Done.
+
+Step 4. Monte Carlo Sampling
+   Load conformer list from file "head3.lst" ...
+   Scaling factors:
+   VDW0  = 0.100:
+   VDW1  = 0.100:
+   VDW   = 0.100:
+   TORS  = 0.100:
+   ELE   = 1.000:
+   DSOLV = 1.000:
+   Done
+
+   Load pairwise interactions ...
+   Done
+
+   Verify self consistancy of conformer flag ...
+   PRO01A0002_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   PHE01A0004_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   CYD01A0005_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   LEU01A0006_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   PRO01A0008_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   PRO01A0009_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   PRO01A0013_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   CYD01A0014_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   ALA01A0016_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   ILE01A0018_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   ILE01A0019_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   PHE01A0022_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   ALA01A0025_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   ALA01A0027_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   LEU01A0029_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   CYD01A0030_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   PHE01A0033_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   VAL01A0034_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   CYD01A0038_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   ALA01A0040_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   ASN01A0043_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   ASN01A0044_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   PHE01A0045_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   ALA01A0048_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   CYD01A0051_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   MET01A0052_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   CYD01A0055_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   ALA01A0058_001 f 0.00 -> t 1.00 (single conformer treated as fixed)
+   Conformer flags updated due to self consistancy.
+
+   Do titration at 15 points...
+   Detailed progress is in file "mc_out"
+   Monte Carlo set up time: 1 seconds.
+   Titration  1:     1 seconds, biggest stdev of conformer occ = 0.027
+   Titration  2:     2 seconds, biggest stdev of conformer occ = 0.014
+   Titration  3:     2 seconds, biggest stdev of conformer occ = 0.023
+   Titration  4:     1 seconds, biggest stdev of conformer occ = 0.031
+   Titration  5:     2 seconds, biggest stdev of conformer occ = 0.029
+   Titration  6:     2 seconds, biggest stdev of conformer occ = 0.015
+   Titration  7:     2 seconds, biggest stdev of conformer occ = 0.013
+   Titration  8:     2 seconds, biggest stdev of conformer occ = 0.029
+   Titration  9:     1 seconds, biggest stdev of conformer occ = 0.016
+   Titration 10:     2 seconds, biggest stdev of conformer occ = 0.016
+   Titration 11:     3 seconds, biggest stdev of conformer occ = 0.017
+   Titration 12:     2 seconds, biggest stdev of conformer occ = 0.035
+   Titration 13:     1 seconds, biggest stdev of conformer occ = 0.018
+   Titration 14:     2 seconds, biggest stdev of conformer occ = 0.019
+   Titration 15:     2 seconds, biggest stdev of conformer occ = 0.020
+   Done
+
+   Fit titration curves to get pKa/Em ...
+   Done
+
+   Total time on MC: 28 seconds
+
+   Output files:
+      mc_out          : MC progress and convergence.
+      fort.38         : Occupancy table.
+      pK.out          : pKa or Em from titration curve fitting.
+      sum_crg.out     : Summary of residue charges.
+Step 4 Done.
+

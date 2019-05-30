@@ -1,0 +1,16 @@
+How to Install the MCCE:
+
+1. As a normal user, unpack the MCCE package, mcce-1.0.tar.gz by:
+   $ tar -zxvf mcce-1.0.tar.gz
+
+2. Go to the mcce distribution directory
+   $ cd mcce-1.0
+
+3. If you choose to install MCCE systemwide, change to root.  
+   $ su   
+   Otherwise, stay as normal user.
+
+4. Run the mcce installation script by:
+   $ ./mcce_install
+
+

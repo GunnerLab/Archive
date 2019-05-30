@@ -1,0 +1,98 @@
+CONFLIST GLX        GLUBK GLU-1 
+#fixed in one conformer and ionized mg 1/12/04
+
+NATOM    GLXBK      6
+NATOM    GLX-1      9
+
+IATOM    GLXBK  N   0
+IATOM    GLXBK  H   1
+IATOM    GLXBK  CA  2
+IATOM    GLXBK  HA  3
+IATOM    GLXBK  C   4
+IATOM    GLXBK  O   5
+IATOM    GLX-1  CB  0
+IATOM    GLX-1 1HB  1
+IATOM    GLX-1 2HB  2
+IATOM    GLX-1  CG  3
+IATOM    GLX-1 1HG  4
+IATOM    GLX-1 2HG  5
+IATOM    GLX-1  CD  6
+IATOM    GLX-1  OE1 7
+IATOM    GLX-1  OE2 8
+
+ATOMNAME GLXBK    0  N  
+ATOMNAME GLXBK    1  H  
+ATOMNAME GLXBK    2  CA 
+ATOMNAME GLXBK    3  HA 
+ATOMNAME GLXBK    4  C  
+ATOMNAME GLXBK    5  O  
+ATOMNAME GLX-1    0  CB 
+ATOMNAME GLX-1    1 1HB 
+ATOMNAME GLX-1    2 2HB 
+ATOMNAME GLX-1    3  CG 
+ATOMNAME GLX-1    4 1HG 
+ATOMNAME GLX-1    5 2HG 
+ATOMNAME GLX-1    6  CD 
+ATOMNAME GLX-1    7  OE1
+ATOMNAME GLX-1    8  OE2
+
+#1.Basic Conformer Information: name, pka, em, rxn.
+#23456789A123456789B123456789C
+PROTON   GLX-1      -1
+PKA      GLX-1      0.0
+ELECTRON GLX-1      0
+EM       GLX-1      0.0
+RXN      GLX-1      -20.2
+
+#2.Structure Connectivity
+#23456789A123456789B123456789C123456789D123456789E123456789F123456789G123456789H123456789I
+CONNECT  GLXBK  N   sp2       -1    C   0     CA  0     H
+CONNECT  GLXBK  H   s         0     N
+CONNECT  GLXBK  CA  sp3       0     N   0     C   0     CB  0     HA
+CONNECT  GLXBK  HA  s         0     CA
+CONNECT  GLXBK  C   sp2       0     CA  0     O   1     N
+CONNECT  GLXBK  O   sp2       0     C
+CONNECT  GLX-1  CB  sp3       0     CA  0     CG  0    1HB  0    2HB
+CONNECT  GLX-1 1HB  s         0     CB
+CONNECT  GLX-1 2HB  s         0     CB
+CONNECT  GLX-1  CG  sp3       0     CB  0     CD  0    1HG  0    2HG
+CONNECT  GLX-1 1HG  s         0     CG
+CONNECT  GLX-1 2HG  s         0     CG
+CONNECT  GLX-1  CD  sp2       0     CG  0     OE1 0     OE2
+CONNECT  GLX-1  OE1 sp2       0     CD
+CONNECT  GLX-1  OE2 sp2       0     CD
+
+ACCEPTOR GLX-1  OE1  CD 
+ACCEPTOR GLX-1  OE2  CD 
+
+#3.Atom Parameters: Partial Charges and Radii
+# Radii from "Bondi, J.Phys.Chem., 68, 441, 1964."
+RADIUS   GLX    N   1.50
+RADIUS   GLX    H   1.00
+RADIUS   GLX    CA  2.00
+RADIUS   GLX    HA  0.00
+RADIUS   GLX    C   1.70
+RADIUS   GLX    O   1.40
+RADIUS   GLX    CB  2.00
+RADIUS   GLX   1HB  0.00
+RADIUS   GLX   2HB  0.00
+RADIUS   GLX    CG  2.00
+RADIUS   GLX   1HG  0.00
+RADIUS   GLX   2HG  0.00
+RADIUS   GLX    CD  1.70
+RADIUS   GLX    OE1 1.40
+RADIUS   GLX    HE1 1.00
+RADIUS   GLX    OE2 1.40
+RADIUS   GLX    HE2 1.00
+
+
+CHARGE   GLXBK  N    -0.350
+CHARGE   GLXBK  H     0.250
+CHARGE   GLXBK  CA    0.100
+CHARGE   GLXBK  C     0.550
+CHARGE   GLXBK  O    -0.550
+CHARGE   GLX-1  CG    0.000
+CHARGE   GLX-1  CD    0.100
+CHARGE   GLX-1  OE1  -0.550
+CHARGE   GLX-1  OE2  -0.550
+

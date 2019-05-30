@@ -1,0 +1,6 @@
+Todo:
+
+1. in memory function to run delphi
+2. pKa ionizable residue recognition error, negative sequence number recogonized as charged.
+3. Terminal residue can not have alternate positions
+4. Monte Carlo sum_crg writes out net charge as soon as it sees multiple conformer types.
