@@ -1,0 +1,121 @@
+#This is Stephanie, I want to edit this 
+CONFLIST LEU        LEUBK LEU01
+
+NATOM    LEUBK      6
+NATOM    LEU01      13
+
+IATOM    LEUBK  N   0
+IATOM    LEUBK  H   1
+IATOM    LEUBK  CA  2
+IATOM    LEUBK  HA  3
+IATOM    LEUBK  C   4
+IATOM    LEUBK  O   5
+IATOM    LEU01  CB  0
+IATOM    LEU01 HB2  1
+IATOM    LEU01 HB3  2
+IATOM    LEU01  CG  3
+IATOM    LEU01  HG  4
+IATOM    LEU01  CD1 5
+IATOM    LEU01 HD11 6
+IATOM    LEU01 HD12 7
+IATOM    LEU01 HD13 8
+IATOM    LEU01  CD2 9
+IATOM    LEU01 HD21 10
+IATOM    LEU01 HD22 11
+IATOM    LEU01 HD23 12
+
+ATOMNAME LEUBK    0  N  
+ATOMNAME LEUBK    1  H  
+ATOMNAME LEUBK    2  CA 
+ATOMNAME LEUBK    3  HA 
+ATOMNAME LEUBK    4  C  
+ATOMNAME LEUBK    5  O  
+ATOMNAME LEU01    0  CB 
+ATOMNAME LEU01    1 HB2 
+ATOMNAME LEU01    2 HB3 
+ATOMNAME LEU01    3  CG 
+ATOMNAME LEU01    4  HG 
+ATOMNAME LEU01    5  CD1
+ATOMNAME LEU01    6 HD11
+ATOMNAME LEU01    7 HD12
+ATOMNAME LEU01    8 HD13
+ATOMNAME LEU01    9  CD2
+ATOMNAME LEU01   10 HD21
+ATOMNAME LEU01   11 HD22
+ATOMNAME LEU01   12 HD23
+
+
+
+
+
+
+#1.Basic Conformer Information: name, pka, em, rxn.
+PROTON   LEU01      0
+PKA      LEU01      0.0
+ELECTRON LEU01      0
+EM       LEU01      0.0
+RXN      LEU01      0.00
+
+#2.Structure Connectivity
+#23456789A123456789B123456789C123456789D123456789E123456789F123456789G123456789H123456789I
+#23456789A123456789B123456789C123456789D123456789E123456789F123456789G123456789H123456789I
+#ONNECT   conf atom  orbital  ires conn ires conn ires conn ires conn
+#ONNECT |-----|----|---------|----|----|----|----|----|----|----|----|----|----|----|----|
+CONNECT  LEUBK  N   sp2       -1    C   0     CA  0     H
+CONNECT  LEUBK  H   s         0     N
+CONNECT  LEUBK  CA  sp3       0     N   0     C   0     CB  0     HA
+CONNECT  LEUBK  HA  s         0     CA
+CONNECT  LEUBK  C   sp2       0     CA  0     O   1     N
+CONNECT  LEUBK  O   sp2       0     C
+CONNECT  LEU01  CB  sp3       0     CA  0     CG  0    HB2  0    HB3 
+CONNECT  LEU01 HB2  s         0     CB
+CONNECT  LEU01 HB3  s         0     CB
+CONNECT  LEU01  CG  sp3       0     CB  0     CD1 0     CD2 0     HG
+CONNECT  LEU01  HG  s         0     CG
+CONNECT  LEU01  CD1 sp3       0     CG  0    HD11 0    HD12 0    HD13
+CONNECT  LEU01 HD11 s         0     CD1
+CONNECT  LEU01 HD12 s         0     CD1
+CONNECT  LEU01 HD13 s         0     CD1
+CONNECT  LEU01  CD2 sp3       0     CG  0    HD21 0    HD22 0    HD23
+CONNECT  LEU01 HD21 s         0     CD2
+CONNECT  LEU01 HD22 s         0     CD2
+CONNECT  LEU01 HD23 s         0     CD2
+#23456789A123456789B123456789C123456789D123456789E123456789F123456789G123456789H123456789I
+
+#3.Atom Parameters: Partial Charges and Radii
+CHARGE   LEUBK  N    -0.350
+CHARGE   LEUBK  H     0.250
+CHARGE   LEUBK  CA    0.100
+CHARGE   LEUBK  C     0.550
+CHARGE   LEUBK  O    -0.550
+
+# Radii parseres.siz
+RADIUS   LEU    N   1.50
+RADIUS   LEU    H   1.00
+RADIUS   LEU    CA  2.00
+RADIUS   LEU    HA  0.00
+RADIUS   LEU    C   1.70
+RADIUS   LEU    O   1.40
+RADIUS   LEU    CB  2.00
+RADIUS   LEU   HB2  0.00
+RADIUS   LEU   HB3  0.00
+RADIUS   LEU    CG  2.00
+RADIUS   LEU    HG  0.00
+RADIUS   LEU    CD1 2.00
+RADIUS   LEU   HD11 0.00
+RADIUS   LEU   HD12 0.00
+RADIUS   LEU   HD13 0.00
+RADIUS   LEU    CD2 2.00
+RADIUS   LEU   HD21 0.00
+RADIUS   LEU   HD22 0.00
+RADIUS   LEU   HD23 0.00
+
+#4.Rotomer
+#=========================================================================
+#        GRP   #      BOND     AFFECTED_ATOMS
+#123456789012345678901234567890
+#-------|---|----|-|---------|----|----|----|----|----|----|----|----|----
+ROTAMER  LEU   0     CA - CB   CG   CD1  CD2
+ROTAMER  LEU   1     CB - CG   CD1  CD2
+#=========================================================================
+
