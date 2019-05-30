@@ -1,0 +1,30 @@
+package:
+  name: mcce 
+  version: "3.0"
+
+source:
+  #path: .
+  git_url: https://github.com/MarilyGunnersLab/mcce3.0.git
+  git_tag: master 
+
+
+build:
+  number: 0
+
+requirements:
+  build:
+   - cmake 
+   - glib
+   - pkgconfig
+   #- gsl
+
+
+  run:
+   - cmake
+   - glib
+   - pkgconfig
+   #- gsl
+about:
+  home: https://sites.google.com/site/mccewiki/home
+  license: MIT
+  summary: Multi-Conformation Continuum Electrostatics
