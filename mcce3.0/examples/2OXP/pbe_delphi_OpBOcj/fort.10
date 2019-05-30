@@ -1,0 +1,16 @@
+in(unpdb,file="fort.13")
+in(phi,file="run02.phi")
+center(777, 777, 0)
+out(frc,file="run03.frc")
+out(phi,file="run03.phi")
+energy(g,an,ag,sol)
+gsize=65
+scale=2.000000
+indi=4.0
+exdi=80.0
+ionrad=2.0
+prbrad=1.4
+salt=0.15
+bndcon=3
+site(a,c,p)
+out(eps,file="epsmap.txt")

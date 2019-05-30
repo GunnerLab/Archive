@@ -1,0 +1,30 @@
+prot.pdb                                                    (INPDB)
+
+t        step 1: pre-run, pdb-> mcce pdb                    (DO_PREMCCE)
+t        step 2: make rotatmers                             (DO_ROTAMERS)
+t        step 3: do energy calculations                     (DO_ENERGY)
+t        step 4: monte carlo sampling                       (DO_MONTE)
+
+
+0        sidechain optimization: 0=mcce, 1=P.Comte's GA,    (SIDECHAIN_OPT)
+                 2=mcce + MHD's pruning function
+delphi   Poisson-Boltzmann solver,apbs or delphi            (PBE_SOLVER)
+surface  self/surface, APBS always use rxn self energy      (RXN_METHOD)
+
+4.0      Protein dielectric constant for DelPhi             (EPSILON_PROT)
+/home/mcce/mcce3.0/extra.tpl                              (EXTRA)
+/home/mcce/mcce3.0/name.txt MCCE renaming rule.           (RENAME_RULES)
+/home/mcce/mcce3.0                                        (MCCE_HOME)
+
+t        Label terminal residues?                           (TERMINALS)
+
+80.0     Solvent dielectric constant for DelPhi             (EPSILON_SOLV)
+65       Grids in each DelPhi                               (GRIDS_DELPHI)
+/home/mcce/mcce3.0/bin/delphi2                              (DELPHI_EXE)
+
+# Advanced options:
+0        pbe    start conformer number, 0 based            (DELPHI_START)
+999999   pbe    end conformer number, self included        (DELPHI_END)
+t        Using Yifan's monte carlo                          (MONTE_ADV_OPT)
+
+

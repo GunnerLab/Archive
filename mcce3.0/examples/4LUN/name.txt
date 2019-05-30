@@ -1,0 +1,121 @@
+# Rename rule file contains rules to format atom names and residue
+# names. The purpose is to unify residue names to 3-char mcce names
+# and break some big cofactors into small ones.
+#
+# Each line has two fields separated by at least one space. Each field
+# is 14 characters long, matching the atom, residue name, chainID and
+# sequence number field of a pdb line. The first string will be
+# replaced by the second string.
+#
+# Symbol "*" in the first string is a wildcard that matchs any character.
+# It means "do not replace" in the second string.
+#
+# The replace is accumulative in the order of appearing in this file.
+#
+####_###_#_###  ####_###_#_###
+*D************  *H************      rename all atom D to H
+***** ********  *****_********
+****** *******  ******_*******
+******* ******  *******_******
+*****HEA******  *****HEM******
+*****HEC******  *****HEM******
+*CAA*HEM******  *****PAA******      extract PAA from heme
+*CBA*HEM******  *****PAA******
+*CGA*HEM******  *****PAA******
+*O1A*HEM******  *****PAA******
+*O2A*HEM******  *****PAA******
+*HAA*HEM******  *****PAA******
+*HBA*HEM******  *****PAA******
+*H1A*HEM******  *****PAA******
+*H2A*HEM******  *****PAA******
+*CAD*HEM******  *****PDD******      extract PDD from heme
+*CBD*HEM******  *****PDD******
+*CGD*HEM******  *****PDD******
+*O1D*HEM******  *****PDD******
+*O2D*HEM******  *****PDD******
+*HAD*HEM******  *****PDD******
+*HBD*HEM******  *****PDD******
+*H1D*HEM******  *****PDD******
+*H2D*HEM******  *****PDD******
+*C11*HEM******  *****FAR******      extract FAR from heme
+*C12*HEM******  *****FAR******
+*C13*HEM******  *****FAR******
+*C14*HEM******  *****FAR******
+*C15*HEM******  *****FAR******
+*C16*HEM******  *****FAR******
+*C17*HEM******  *****FAR******
+*C18*HEM******  *****FAR******
+*C19*HEM******  *****FAR******
+*C20*HEM******  *****FAR******
+*C21*HEM******  *****FAR******
+*C22*HEM******  *****FAR******
+*C23*HEM******  *****FAR******
+*C24*HEM******  *****FAR******
+*C25*HEM******  *****FAR******
+*C26*HEM******  *****FAR******
+*C27*HEM******  *****FAR******
+*O11*HEM******  *****FAR******
+ O **ACT******   O_***********
+ C **ACT******   C_***********
+ O **CMO******   O_***********
+ C **CMO******   C_***********
+ O **CSS******   O_***********
+ C **CSS******   C_***********
+ N **CSS******   N_***********
+ O **PCA******   O_***********
+ C **PCA******   C_***********
+ N **PCA******   N_***********
+ O **ACN******   O_***********
+ C **ACN******   C_***********
+*NA **********  *N A**********     extra space for the NA in bcl, bph
+*NB **********  *N B**********
+*NC **********  *N C**********
+*ND **********  *N D**********
+
+*****HEM*A**90  *****HMB*A  90
+*N  *HIS*A  23  *****BKB******  backbone residue
+*CA *HIS*A  23  *****BKB******  backbone residue
+*C  *HIS*A  23  *****BKB******  backbone residue
+*O  *HIS*A  23  *****BKB******  backbone residue
+*****HIS*A  23  a****HMB*A  90
+*N  *HIS*A  36  *****BKB******  backbone residue
+*CA *HIS*A  36  *****BKB******  backbone residue
+*C  *HIS*A  36  *****BKB******  backbone residue
+*O  *HIS*A  36  *****BKB******  backbone residue
+*****HIS*A  36  b****HMB*A  90
+
+#for cys in c-type heme; this will remove vdw clash and use CYL tpl file that doesnt have HS and has no charge on SG
+*****CYS*A* 32  *****CYL*A 032
+*****CYS*A* 35  *****CYL*A 035
+
+*****HEM*A**91  *****HMB*A  91
+*N  *HIS*A  26  *****BKB******  backbone residue
+*CA *HIS*A  26  *****BKB******  backbone residue
+*C  *HIS*A  26  *****BKB******  backbone residue
+*O  *HIS*A  26  *****BKB******  backbone residue
+*****HIS*A  26  a****HMB*A  91  
+*N  *HIS*A  64  *****BKB******  backbone residue
+*CA *HIS*A  64  *****BKB******  backbone residue
+*C  *HIS*A  64  *****BKB******  backbone residue
+*O  *HIS*A  64  *****BKB******  backbone residue
+*****HIS*A  64  b****HMB*A  91
+
+#for cys in c-type heme; this will remove vdw clash and use CYL tpl file that doesnt have HS and has no charge on SG
+*****CYS*A* 60  *****CYL*C 060
+*****CYS*A* 63  *****CYL*C 063
+
+*****HEM*A**92  *****HEC*A  92
+*N  *HIS*A  80  *****BKB******  backbone residue
+*CA *HIS*A  80  *****BKB******  backbone residue
+*C  *HIS*A  80  *****BKB******  backbone residue
+*O  *HIS*A  80  *****BKB******  backbone residue
+*****HIS*A  80  a****HEC*A  92  
+*N  *MET*A  51  *****BKB******  backbone residue
+*CA *MET*A  51  *****BKB******  backbone residue
+*C  *MET*A  51  *****BKB******  backbone residue
+*O  *MET*A  51  *****BKB******  backbone residue
+*****MET*A  51  b****HEC*A  92
+
+#for cys in c-type heme; this will remove vdw clash and use CYL tpl file that doesnt have HS and has no charge on SG
+*****CYS*A* 76  *****CYL*C 076
+*****CYS*A* 79  *****CYL*C 079

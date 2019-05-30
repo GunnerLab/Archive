@@ -1,0 +1,6 @@
+PRO A0017_ R f 00 S f  0.0 H f 00 M 000
+NTR A0018_ R f 00 S f  0.0 H f 00 M 000
+PRO A0018_ R f 00 S f  0.0 H f 00 M 000
+PRO A0019_ R f 00 S f  0.0 H f 00 M 000
+SER A0020_ R f 00 S f  0.0 H f 00 M 000
+CTR A0020_ R f 00 S f  0.0 H f 00 M 000

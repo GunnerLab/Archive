@@ -1,0 +1,50 @@
+TORSION  PRO01  N    CD   CG   CB   f        0.0         3      0.00
+   Error! get_connect12(): connectivity of atom " N   PRO A0017" is not complete:
+
+          get_connect12(): atom  C   of residue i-1 is not found 
+
+   Error! get_connect12(): connectivity of atom " N   PRO A0018" is not complete:
+
+          get_connect12(): atom  C   of residue i-1 is not found 
+
+TORSION  PROBK  CA   N    CD   CG   f        0.0         2    180.00
+TORSION  PROBK  C    CA   N    CD   f        0.0         3      0.00
+   Error! get_connect12(): connectivity of atom " C   PRO A0017" is not complete:
+
+          get_connect12(): atom  N   of residue i+1 is not found 
+
+TORSION  PROBK  O    C    CA   N    f        0.0         2    180.00
+TORSION  PRO01  CB   CG   CD   N    f        0.0         3      0.00
+Warning, bond length btw  CA - CB  in res PRO A0017 is    4.320
+Warning, bond length btw  CB - CA  in res PRO A0017 is    4.320
+CHARGE   PROBK  HA      0.000
+CHARGE   PRO01  CB      0.000
+CHARGE   PRO01 1HB      0.000
+CHARGE   PRO01 2HB      0.000
+CHARGE   PRO01  CG      0.000
+CHARGE   PRO01 1HG      0.000
+CHARGE   PRO01 2HG      0.000
+CHARGE   PRO01  CD      0.000
+CHARGE   PRO01 1HD      0.000
+CHARGE   PRO01 2HD      0.000
+CHARGE   NTR01  HA      0.000
+CHARGE   SERBK  HA      0.000
+CHARGE   SER01 1HB      0.000
+CHARGE   SER01 2HB      0.000
+Warning, bond length btw  CA - CB  in res PRO A0017 is    4.320
+Warning, bond length btw  CB - CA  in res PRO A0017 is    4.320
+CHARGE   NTR+1  HA      0.000
+Warning, bond length btw  CA - CB  in res PRO A0017 is    4.320
+Warning, bond length btw  CB - CA  in res PRO A0017 is    4.320
+Warning, bond length btw  CA - CB  in res PRO A0017 is    4.320
+Warning, bond length btw  CB - CA  in res PRO A0017 is    4.320
+Warning, bond length btw  CA - CB  in res PRO A0017 is    4.320
+Warning, bond length btw  CB - CA  in res PRO A0017 is    4.320
+Warning, bond length btw  CA - CB  in res PRO A0017 is    4.320
+Warning, bond length btw  CB - CA  in res PRO A0017 is    4.320
+Warning, bond length btw  CA - CB  in res PRO A0017 is    4.320
+Warning, bond length btw  CB - CA  in res PRO A0017 is    4.320
+Warning, bond length btw  CA - CB  in res PRO A0017 is    4.320
+Warning, bond length btw  CB - CA  in res PRO A0017 is    4.320
+Warning, bond length btw  CA - CB  in res PRO A0017 is    4.320
+Warning, bond length btw  CB - CA  in res PRO A0017 is    4.320
