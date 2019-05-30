@@ -1,0 +1,8 @@
+mcce.cbp
+mcce.layout
+.idea
+*.swp
+*.o
+*.pyc
+*~
+.svn
