@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Condor in 5 min</title>
+<style type="text/css">
+<!--
+.style1 {
+	font-size: larger;
+	font-style: italic;
+}
+.style2 {font-size: larger}
+.style5 {font-family: Courier, "Monotype Sorts"; font-size: smaller; }
+.style7 {color: #FF0000}
+-->
+</style>
+</head>
+
+<body>
+<h1> Master Condor Job Scheduler in 5 Minutes</h1>
+<p>(Amended contents in the last two days are in <span class="style7">red</span>) </p>
+<p><span class="style1">Dr. Junjun Mao</span></p>
+<p><span class="style2">Research Associate, Levich Institute at City College of New York, Last update: 05/25/2006</span></p>
+<hr>
+
+<h2><em>What is Condor? </em></h2>
+<p><em> </em>Condor is a distributed job scheduler developed by the computer science department at Univ. of Wisconsin &ndash; Madison. It utilizes the computing power of a pool of computers that communicate over a network. When a user submits the job to Condor, Condor finds an available computer in the pool and begins running the job on it. Condor can check the available resources and assign jobs in a way that balances workload.</p>
+<p>Condor Project URL is: <a href="https://www.cs.wisc.edu/condor/">https://www.cs.wisc.edu/condor/</a></p>
+<h2><em>Serial job or Parallel Job?</em></h2>
+<p>A serial job is a process whose order of instructions is programmed. It may or may not spawn child processes. However, a child process only talks to its parent process in a serial job, and only one process is actively using a CPU at any time. Most jobs can be identified as serial jobs.</p>
+<p>Some jobs require more than one process to be running at the same time and processes talk to each other.Condor's Parallel universe is a mechanism to support a wide variety of parallel programming environments, including most implementations of MPI. Three unique shecduler policies are made for such parallel jobs: 1) When parallel jobs are scheduled, a number of machines will be allocted and the processes start at the same time; 2) Parallel processes will not be migrated,  suspended, or preempted. 3) The first machine selected is treated specially - when that job exits, Condor shuts down all the other nodes, even if they haven't finished running yet. </p>
+<h2><em>How to submit condor job? </em></h2>
+<p>Submitting a job is telling Condor a description file by command: </p>
+<pre> condor_submit descriptionfile </pre>
+<p>Here are  sample description files for serial jobs and a MPI job. All condor variables and commands in submit description file are case incensitive. Note the MPI job is invoked by a script I prepared, and the actual MPI executable, your mpicc outcome, is referred as the first argument. This is similar to the conventional way that MPI jobs are submited with mpirun script.</p>
+<p>Condor checks node status at an interval of about<span class="style7"> 5 minutes. </span>This is necessary because jobs need time to clean up resources, CPU load is counted at an average basis. So it may take up to<span class="style7"> 5 minutes </span>for your job to start and another 10 minutes to release CPU locks after the job is done. Once a job is started, the job runs at its full speed.</p>
+<table width="100%"  border="1">
+  <tr>
+    <th width="50%" scope="col"><p>Serial job<br>
+        <em>(example descrpition file for submission from any place) </em></p>
+    </th>
+    <th scope="col"><p>MPI Job<br>
+        <em>(example descrpition file for submission from working directory)</em></p>
+    </th>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><pre>#####
+# Submit a batch of two serial jobs on crebeo
+#####<br># Section you do not want to edit
+universe = Vanilla
+output = run.out
+error = condor.err
+log = condor.log
+getenv = True<br>#####
+# Please customize following entries for your need
+
+executable = /home2/jmao/condor_test/prime.py
+#arguments =
+
+initialdir = /home2/jmao/condor_test/run_1
+queue </pre>
+      <pre>initialdir = /home2/jmao/condor_test/run_2
+queue </pre>
+    <pre>### End of description file ###</pre></td>
+    <td valign="top"><pre>#####
+# Submit one MPI on crebeo
+#####<br># Section you do not want to edit
+universe = Parallel
+executable = /home2/condor/bin/mpiscript
+Requirements = ((Arch == &quot;x86_64&quot;) &amp;&amp; (LoadAvg &lt; 0.5))
+Output = run.out.$(NODE)
+Error = condor.err.$(NODE)
+Log = condor.log
+#####
+# Please customize following entries for your need
+
+arguments = your_linked_mpi_program<br>machine_count = 8
+
+
+queue
+
+
+### End of description file ###
+
+</pre>
+    </td>
+  </tr>
+</table>
+<blockquote>  <h3>Universe: </h3>
+  <p> Vanilla universe are for serial jobs that are independent of the condor library. Other universes such as &ldquo;standard&rdquo; may take advantage of condor library so that they may &ldquo;migrate&rdquo; among nodes to get best performance. Parallel universe is for parallel jobs. Condor uses special policis to schedule parallel jobs. </p>
+  <h3>Executable: </h3>
+  <p> The absolute path and file name of the executable. Since Condor on slave nodes relies on the shared file system to find the executable, make sure the specified executables are in the shared file systems.</p>
+  <h3>Output: </h3>
+  <p> The output file name will capture what the program would normally write to stdout.</p>
+  <h3>Error: </h3>
+  <p> The error file name will capture any error messages the program would normally write to the stderr.</p>
+  <h3>Log: </h3>
+  <p> This file keeps condor&rsquo;s log of this job.</p>
+  <h3>Initialdir: </h3>
+  <p> Used to specify the initial working directory for the job in the queue. It should be a path to a preexisting directory. If not specified, the Initialdir is the directory where condor_submit is invoked. Input, output, error, and log files are all kept in initialdir.</p>
+  <h3>Queue: </h3>
+  <p> Send a job to the condor queue. When you want to set up runs of the same excutable in different directories,  you may prepare multiple Initialdir/Queue pairs. Each Initialdir/Queue is a command to submit a job. As long as the executable is the same, one may submit multiple jobs that will run under different directories in a single file. Jobs submitted with a description file is a job &ldquo;cluster&rdquo;, and each job is called a &ldquo;process&rdquo;.</p>
+  <h3>Machine_count:</h3>
+  <p>This entry is for parallel jobs only. It is the number of machines that the parallel job will run on. Note it is not always a good idea to have a big machine_count number, as the condor scheduler has to wait until all machines are availabe to start your job.</p>
+  <h3>Requirements = (Arch == &quot;x86_64&quot;):</h3>
+  <p>This line tells condor to run job on 64-bit nodes. Some MPI programs are compiled on node41, and they have to run on node 41 and above.
+  </p>
+  <h3>Arguments:</h3>
+  <p>This line may bring in command line arguments of the executable.</p>
+  <h3>Getenv = True:</h3>
+  <p>If getenv is set to be true, the executable will know the environment variables such as PATH and license variable. However, the executable itself has to be abosulte path or a path relative to the submit command.</p>
+  <h3>$(NODE):</h3>
+  <p>The $(NODE) macro is given a unique value as programs are assigned to machines. The $(NODE) value is fixed for the entire length of the job. It can therefore be used to identify individual aspects of the computation. In this example, it is used to give unique names to input and output files.</p>
+  
+</blockquote>
+<h2><em> Job Scheduling - Preemption and Priority </em></h2>
+<p><em> &nbsp;</em>To ensure that each user gets the fair share of using the computing resources, condor constantly calculates the priority for each user and all jobs in the queue. It means even if job 1 is submitted before job 2, it is not necessarily that job 1 executes before job 2. Currently, preemption, or interruption of a running job, is disabled on crebeo to make sure a job will not be interrupted. Once a program starts, it will run to the end. The reason is that condor is unable to checkpoint jobs with external calls which many applications may have. </p>
+
+<h2><em> User Command Summary</em></h2>
+
+<table width="100%" border="1">
+  <tr align="left" valign="top">
+    <td><strong><em> Category</em></strong></td>
+    <td><strong><em> Command</em></strong></td>
+    <td><strong><em> Command Option/Arguments</em></strong></td>
+    <td align="left" valign="top"><strong><em> Description</em></strong></td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td>Submit job</td>
+    <td><span class="style5"> condor_submit </span></td>
+    <td><span class="style5"> descriptionfile </span></td>
+    <td align="left"> Submit a job </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td rowspan="3"> Monitor Progress </td>
+    <td class="style5"> condor_status </td>
+    <td class="style5">&nbsp; </td>
+    <td align="left"> Display the jobs in the queue</td>
+  </tr>
+  <tr>
+    <td rowspan="2" class="style5"> condor_q  </td>
+    <td align="left" class="style5"> User </td>
+    <td align="left"> Display the jobs in the queue submitted by this user </td>
+  </tr>
+  <tr>
+    <td class="style5"> -analyze </td>
+    <td align="left"> Inquire resources for the queued jobs</td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td rowspan="9"> Edit Queue  </td>
+    <td rowspan="3" class="style5"> condor_hold </td>
+    <td class="style5"> User </td>
+    <td align="left"> Put jobs of this user into hold state </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster </td>
+    <td align="left"> Put jobs of this cluster into hold state </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster.process </td>
+    <td align="left"> Put specific job into the hold state </td>
+  </tr>
+  <tr>
+    <td rowspan="3" class="style5"> condor_release </td>
+    <td class="style5"> User </td>
+    <td align="left"> Release jobs of the user </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster </td>
+    <td align="left"> Release a job cluster </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster.process </td>
+    <td align="left"> Release specified job </td>
+  </tr>
+  <tr>
+    <td rowspan="3" class="style5"> condor_rm </td>
+    <td class="style5"> User</td>
+    <td align="left"> Remove queued jobs of the user </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster </td>
+    <td align="left"> Remove queued job cluster </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster.process </td>
+    <td align="left"> Remove queued job </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td rowspan="3"> Review Completed Jobs </td>
+    <td rowspan="3" class="style5"> condor_history </td>
+    <td class="style5">&nbsp;</td>
+    <td align="left"> View log of condor jobs completed to date </td>
+  </tr>
+  <tr>
+    <td class="style5"> User </td>
+    <td align="left"> View completed jobs of this user </td>
+  </tr>
+  <tr>
+    <td class="style5"> -l </td>
+    <td align="left"> Detailed review mode </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td> Adjust job priority </td>
+    <td class="style5"> condor_prio </td>
+    <td class="style5"> (+|-|-p) value Cluster.process</td>
+    <td align="left"> Increase/Decrease/Set job priority for a job. The job priority ranges from &ndash;20 to +20 and the default value is 0. </td>
+  </tr>
+</table>
+<p><em>&nbsp;</em></p>
+<h2><em> Tips:</em></h2>
+<p>To check the working directory of a job in the queue: </p>
+<blockquote>
+  <pre>condor_q (to get cluster and process number)
+condor_q &ndash;l Cluster.process | grep Iwd</pre>
+</blockquote>
+<p> To check the working directory of a finished job: </p>
+<blockquote>
+  <pre>condor_history (to get cluster and process number)
+condor_history &ndash;l Cluster.process | grep Iwd </pre>
+</blockquote>
+<p>Jobs removed by condor_rm might get stuck with ST &ldquo;X&rdquo; in condor_q. If state &quot;X&quot; doesn't go away in 10 minutes, the following command will force the removal of jobs marked &ldquo;X&rdquo;:
+</p>
+
+  <blockquote>
+    <pre>condor_rm -forcex job_id
+</pre>
+</blockquote>
+  <blockquote> </blockquote>
+  <p>Putting jobs at &quot;running&quot; state to &quot;hold&quot; state in Vanilla space may result in unexpected behavior, sometimes jobs will start from the beginning. Holding &quot;idle&quot; jobs is safe.</p>
+<p>&nbsp;</p>
+<hr>
+<p><em>jmao@levdec.engr.ccny.cuny.edu</em></p>
+</body>
+</html>

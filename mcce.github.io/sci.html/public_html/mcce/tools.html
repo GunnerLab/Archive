@@ -1,0 +1,910 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<meta name="generator" content="Adobe GoLive">
+		<title>MCCE tools</title>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<div align="center">
+			<h1 class="centered">Multi-Conformer Continuum Electrostatics (MCCE)</h1>
+			<h3 class="centered"><i>Gunner Lab at the City College of New York</i></h3>
+		</div>
+		<hr style="width: 100%;">
+		<div align="center">
+			<p class="centered">[<a href="index.html">Home</a>] [<a href="manual.html">Manual</a>] [Tools] [<a href="http://www.sci.ccny.cuny.edu/%7egunner/Pages-lab/personel.html">About Us</a>]</p>
+		</div>
+		<div align="left">
+			<h3 class="centered">MCCE utility tools:</h3>
+			<table width="100%" border="2" cellspacing="5" cellpadding="2" bgcolor="#cccccc">
+				<tr>
+					<td valign="top" width="50%"><b>Data Analysis</b>
+						<ul>
+							<li><a href="#webtool">Web analysis tool</a>
+							<li><a href="#mfe">Residue ionization energy by MFE</a>
+							<li><a href="#closeup">Close up atoms</a>
+							<li><a href="#rmsd">RMSD of conformers in a residue</a>
+							<li><a href="#getinfo">Coupled residues</a>
+							<li><a href="#substract">Substract two files
+						</a>
+							<li>
+						</ul>
+					</td>
+					<td valign="top"><b>Parameter Preparation</b>
+						<ul>
+							<li><a href="#mk_iatom">Creat derived entries for a prrameter file</a><li><a href="#hicup">Convert Hicup to MCCE format
+						</a></ul>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" width="50%"><b>Improving MCCE runs</b>
+						<ul>
+							<li><a href="#reduce_conf">Remove unoccupied conformers
+							</a><li><a href="#merge">Merge PDB files
+							</a><li><a href="#rewrite_opp">Update opp files with the latest head3.lst</a>
+							<li><a href="#prune">Prune step2_out.pdb standalone program
+							</a><li><a href="#cutnmr">Divide NMR structures
+						</a></ul>
+					</td>
+					<td valign="top"><b>Exporting and Debug</b>
+						<ul>
+							<li><a href="#testfmt">Show the content of DelPhi unformated file
+							</a><li><a href="#getpdb">Get a pdb file with one command
+							</a><li><a href="#mostocc">Compose a pdb file with the most occupied conformers</a></ul>
+					</td>
+				</tr>
+			</table>
+			<p><i>All programs are located at /home/mcce/mcce1.0/bin unless otherwise stated.</i></p>
+			<h4><a id="webtool" name="webtool"></a>Web Analysis Tool (In campus access only) - by Junjun</h4>
+			<blockquote>
+				<p>MCCE web analysis tool uses mean field approach to eastimate residue-residue interaction. The breakdown analysis helps understanding why a conformer is occupied and why a residue is ionized.</p>
+				<blockquote>
+					<p><a href="http://134.74.186.110/cgi-bin/index.py">MCCE analysis tool on Hestia (134.74.186.110)</a></p>
+					<p><a href="http://134.74.186.110/cgi-bin/index.py">MCCE analysis tool on </a><a href="http://134.74.186.120/cgi-bin/index.py">Metis (134.74.186.120)</a></p>
+					<p><a href="http://134.74.186.100/cgi-bin/index.py">MCCE analysis tool on </a><a href="http://134.74.186.100/cgi-bin/index.py">Sibyl (134.74.186.100)</a></p>
+				</blockquote>
+			</blockquote>
+			<h4><a id="mfe" name="mfe"></a>MFE - by Junjun</h4>
+			<blockquote>
+				<p>MFE approximation of residue ionization energy. This is the command line version of the web-interfaced analysis tool.</p>
+				<p><b>Synopsis</b></p>
+				<blockquote>
+					<pre>mfe.py res_id titration_point [pH_cutoff]</pre>
+				</blockquote>
+				<p><b>Description</b></p>
+				<blockquote>
+					<p><b>res_id</b> is the identification string of an ionizable residue, as appeared in file &quot;pK.out&quot;</p>
+					<p><b>titration_point</b> is the titration point that mfe is carried out. If this number is between two titration values of Monte Carlo simulations, a linear interpolation will be performed.</p>
+					<p><b>pH_cutoff</b> is the cutoff value in unit pH of printing residue pairwise interaction. It is an optional argument, without which all pairwise interactions will be printed out.</p>
+					<p></p>
+				</blockquote>
+			</blockquote>
+			<h4><a id="closeup" name="closeup"></a>Close up atoms - by Yifan</h4>
+			<blockquote>
+				<p>This program measures distance of each atom to [x,y,z], and print out those pdb lines within the threshold.</p>
+			</blockquote>
+			<div align="left">
+				<blockquote>
+					<p><b>Synopsis</b></p>
+					<blockquote>
+						<pre>closeup pdbfile x y z threshold</pre>
+					</blockquote>
+					<p><b>Description</b></p>
+					<blockquote>
+						<p><b>pdbfile</b> is your input pdb file</p>
+						<p><b>x y z</b> are coordinate of a point where distances are measured, you can copy x y z from the pdb line and paste it here</p>
+						<p><b>threshold </b>is the distance limit of printing the atoms. Only those within this threshold are printed out.</p>
+						<p>The serial number field of an ATOM line in the output will be replaced by the atom distance.</p>
+						<p></p>
+					</blockquote>
+				</blockquote>
+				<div align="left">
+					<h4><a id="rmsd" name="rmsd"></a>RMSD of conformers in a residue - by Junjun</h4>
+				</div>
+				<blockquote>
+					<div align="left">
+						<p>This program prints out the RMSD between the specified conformer and other conformers in the same residue.</p>
+						<div align="left">
+							<p><b>Synopsis</b></p>
+						</div>
+					</div>
+					<blockquote>
+						<div align="left">
+							<div align="left">
+								<pre>res_confs.py IDstring1 [IDstring2 [IDstring3 ...]]</pre>
+							</div>
+						</div>
+					</blockquote>
+					<div align="left">
+						<div align="left">
+							<p><b>Description</b></p>
+						</div>
+					</div>
+					<blockquote>
+						<div align="left">
+							<div align="left">
+								<p><b>IDstring1</b> is the identification string that appeared in the ATOM line of that conformer in step3_out.pdb</p>
+								<p><b>IDstring2 </b>is optional identification string to help uniquely identify a conformer </p>
+								<p><b>IDstring3 and more </b>are more optional identification string to help uniquely identify a conformer</p>
+								<p>This program expects file &quot;step3_out.pdb&quot; so it must be called in a working directory. The ID strings are not sensitive to the order.</p>
+							</div>
+						</div>
+					</blockquote>
+					<div align="left">
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<p><b>Example</b></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<blockquote>
+						
+												<pre>res_confs.py res_confs.py GLU A0073_051
+</pre>
+											
+					</blockquote>
+				</blockquote>
+				<div align="left">
+					<div align="left">
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<h4></h4>
+													<h4><a id="getinfo" name="getinfo"></a>Coupled residues - by Yifan</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<blockquote>
+					<div align="left">
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<p>This program finds the residues with strong interations.</p>
+														<div align="left">
+															<p><b>Synopsis</b></p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<blockquote>
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<pre>getinfo residue [threshold]</pre>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</blockquote>
+					<div align="left">
+															<p><b>Description</b></p>
+														
+					</div>
+					<blockquote>
+															
+																<p>This program is trying to guess coupled residues for the input residue, you need to run it in the directory with head3.lst and opp files in energies/.</p>
+																<p><b>residue: </b>the residue you want to analyze, it can be the residue number (for example: 212) or it can be a string defining the residue (for example: L0212, GLUL0212 etc., L212 would not be recognized in this case)</p>
+						<p><b>threshold: </b>energy threshold for deciding if two residues are coupled (in pK units), default value is 2.</p>
+					</blockquote>
+				</blockquote>
+				<div align="left">																	<h4><a id="reduce_conf" name="reduce_conf"></a>Remove unoccupied conformers - by Junjun</h4>
+																</div>
+				<blockquote>
+																	<div align="left">
+																		<p>This program reads in step3_out.pdb and fort.38, then remove all unoccupied conformers except the native conformers which have &quot;O000&quot; in the history string. The resulted ATOM lines are printed out, which can be redirected to file step2_out.pdb. The purpose is to use this step2_out.pdb as the input of step3 for better dielectric boundary in DelPhi calculation.</p>
+																		<div align="left">
+																			<p><b>Synopsis</b></p>
+																		</div>
+																	</div>
+																	<blockquote>
+																		<div align="left">
+																			<div align="left">
+																				<pre>reduce_conf.py </pre>
+																			</div>
+																		</div>
+																	</blockquote>
+																	<div align="left">
+																		<div align="left">
+																			<p><b>Description</b></p>
+																		</div>
+																	</div>
+																	<blockquote>
+																			<div align="left">
+							<p>This program expects file &quot;step3_out.pdb&quot; so it must be called in a working directory. </p>
+						</div>
+																	</blockquote>
+																						<div align="left">
+																							<p><b>Example</b></p>
+																	</div>
+					<blockquote>
+						<div align="left">
+							<pre>reduce_conf.py &gt; step2_out.pdb</pre>
+						</div>
+					</blockquote>
+				</blockquote>
+									<div align="left">
+										<h4></h4>
+										<h4><a id="merge" name="merge"></a>Merge Conformers - by Yifan</h4>
+						
+				</div>
+				<blockquote>	<div align="left">
+											<p>This program merges several mcce formatted pdb files into one, duplicated conformers are deleted.</p>
+											<div align="left">
+												<p><b>Synopsis</b></p>
+												</div>
+												
+							
+					</div>
+					<blockquote>
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<pre>merge_pdb -i input_list_file -o output.pdb -p param_directory </pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</blockquote>
+					<div align="left">
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<p><b>Description</b></p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+						<blockquote>
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<p><b>-i input_list_file</b>, input_list_flie is a text file with a list of pdb files you want to merge, each line has one pdb file</p>
+													<p><b>-o output.pdb</b>, output.pdb is the merged pdb file</p>
+													<p><b>-p param_directory</b>, param_directory is the location of the parameter directory, if you have extra residues need new.tpl, put new.tpl in the local directory where this program runs</p>
+												</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</blockquote>
+					
+						
+					
+					
+				</blockquote>
+				<div align="left">
+					<div align="left">
+						<div align="left">
+							<h4></h4>
+							<h4><a id="rewrite_opp" name="rewrite_opp"></a>Update opp files with the latest head3.lst - by Yifan</h4>
+						</div>
+						<blockquote>
+							<div align="left">
+								<p>This program takes head3.lst and opp files under energies/ directory as input and complete the opp file if they are asymmetric.</p>
+								<p><b>Synopsis</b></p>
+								<div align="left">
+									
+								</div>
+							</div>
+							<blockquote>
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<pre>rewrite_opp [-d]</pre>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</blockquote>
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<p><b>Description</b></p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<blockquote>
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<p><b>-d</b>: If you have this flag in the command line, and opp file has extra line than head3.lst (for example some conformers in step2_out.pdb has been deleted), then those extra conformers in opp file will be deleted. Otherwise, if -d is not in the command line, then those extra line are kept at the end of the opp file, but not deleted.</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</blockquote>
+						</blockquote>
+					</div>
+				</div>
+				<div align="left">
+					<div align="left">
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<h4></h4>
+									<h4><a id="mk_iatom" name="mk_iatom"></a>Creat derived entries for a prrameter file - by Jinran</h4>
+								</div>
+								<blockquote>
+									<div align="left">
+										<p>This program updates the derived entries (CONFLIST, NATOM, IATOM, and ATOMNAME)  of a parameter (tpl) file from the connectivity table.</p>
+										<p><b>Synopsis</b></p>
+									</div>
+									<blockquote>
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<div align="left">
+																	<pre>mk_iatom input.tpl output.tpl</pre>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</blockquote>
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<p><b>Description</b></p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<blockquote>
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<p><b>input.tpl </b>is the input tpl file.</p>
+																<p><b>output.tpl </b>is the output tpl file.</p>
+																<p></p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</blockquote>
+								</blockquote>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div align="left">
+					<div align="left">
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<h4><a id="hicup" name="hicup"></a>Convert Hicup to MCCE format - by Yifan</h4>
+										</div>
+										<blockquote>
+											<div align="left">
+												<p>It uses connectivity in PDB dictionary file from hicup website and write out connectivity in the format of out tpl file.</p>
+												<p><b>Synopsis</b></p>
+											</div>
+											<blockquote>
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<div align="left">
+																	<div align="left">
+																		<div align="left">
+																			<pre>pdbdict2tpl.py hicup_file</pre>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</blockquote>
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<div align="left">
+																	<div align="left">
+																		<p></p>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</blockquote>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div align="left">
+					<div align="left">
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<h4><a id="testfmt" name="testfmt"></a>Show the content of DelPhi unformated file - by Junjun</h4>
+												</div>
+												<blockquote>
+													<div align="left">
+														<p>This program reads in an unformatted pdb file used by DelPhi and print out its content.</p>
+														<p><b>Synopsis</b></p>
+													</div>
+													<blockquote>
+														<div align="left">
+															<div align="left">
+																<div align="left">
+																	<div align="left">
+																		<div align="left">
+																			<div align="left">
+																				<div align="left">
+																					<pre>testfmt unpdb</pre>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</blockquote>
+												</blockquote>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<blockquote>
+					<p><b>Description</b></p>
+					<blockquote>
+						<p><b>unpdb</b> is unformatted pdb file such as fort.13.</p>
+					</blockquote>
+					<p><b>Example</b></p>
+					<blockquote>
+						<pre>testfmt fort.13</pre>
+					</blockquote>
+					<p></p>
+				</blockquote>
+				<div align="left">
+					<div align="left">
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<h4><a id="getpdb" name="getpdb"></a>Get a pdb file from one command line - by Yanjun</h4>
+														</div>
+														<blockquote>
+															<div align="left">
+																<p>This program gets a pdb file from Protein Data Bank at ftp://ftp.rcsb.org.</p>
+																<p><b>Synopsis</b></p>
+															</div>
+															<blockquote>
+																<div align="left">
+																	<div align="left">
+																		<div align="left">
+																			<div align="left">
+																				<div align="left">
+																					<div align="left">
+																						<div align="left">
+																							<pre>getpdb pdb</pre>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</blockquote>
+														</blockquote>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<blockquote>
+							<p><b>Description</b></p>
+							<blockquote>
+								<p><b>pdb</b> is the 4-character pdb id. The pdb id is not case sensitive, and it can be appened with the extention &quot;.pdb&quot; </p>
+							</blockquote>
+							<p><b>Example</b></p>
+							<blockquote>
+								<pre>getpdb 1akk</pre>
+							</blockquote>
+						</blockquote>
+					</div>
+				</div>
+				<div align="left">
+					<div align="left">
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<div align="left">
+																	<h4><a id="mostocc" name="mostocc"></a>Compose a pdb file with the most occupied conformers - by Junjun</h4>
+																</div>
+																<blockquote>
+																	<div align="left">
+																		<p>This program prints out a pdb file that each residue is represented the most occupied conformer. The output pdb file can be viewed by other protein structure visiualization programs.</p>
+																		<p><b>Synopsis</b></p>
+																	</div>
+																	<blockquote>
+																		<div align="left">
+																			<div align="left">
+																				<div align="left">
+																					<div align="left">
+																						<div align="left">
+																							<div align="left">
+																								<div align="left">
+																									<pre>mostocc.py column_in_fort.38</pre>
+																								</div>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</blockquote>
+																</blockquote>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<blockquote>
+									<p><b>Description</b></p>
+									<blockquote>
+										<p><b>column_in_fort.38</b> is the column number counted from 1 in the file &quot;fort.38&quot;. </p>
+										<p>The program reads in fort.38 and step3_out.pdb, then picks up the backbone atoms and the most occupied conformer at the pH/Eh specified by <b>column_in_fort.38</b>. </p>
+									</blockquote>
+									<p><b>Example</b></p>
+									<blockquote>
+										<pre>mostocc.py 8</pre>
+									</blockquote>
+								</blockquote>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div align="left">
+					<div align="left">
+						<div align="left">
+							<div align="left">
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<div align="left">
+																	<div align="left">
+																		<div align="left">
+																			<h4><a id="substract" name="substract"></a>Substract two files - by yifan</h4>
+																		</div>
+																		<blockquote>
+																			<div align="left">
+																				<p>This program substarcts the number fields of file2 from file1, and prints the result bigger than the given threshold. String fileds are ignored.</p>
+																				<p><b>Synopsis</b></p>
+																			</div>
+																			<blockquote>
+																				<div align="left">
+																					<div align="left">
+																						<div align="left">
+																							<div align="left">
+																								<div align="left">
+																									<div align="left">
+																										<div align="left">
+																											<pre>cmp_yf.py file1 file2 [option]</pre>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</blockquote>
+																		</blockquote>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<blockquote>
+											<p><b>Description</b></p>
+											<blockquote>
+												<p><b>[-t threshold] : </b>threshold for printing, default = 0.05</p>
+												<p><b>[-hl n_headline] : </b>skip first n lines, default = 1</p>
+												<p><b>[-hc n_headcolumn] : </b>using first n columns for matching lines between two files</p>
+												<p><b>[-cf n_column_per_field] : </b>use every n column as one field to get numbers, default = delimited by space</p>
+												<p><b>[-c column_file1 column_file2] : </b>only compare one defined column from each file</p>
+											</blockquote>
+											<p><b>Example</b></p>
+										</blockquote>
+									</div>
+								</div>
+								<blockquote>
+									<blockquote>
+										<p>to compare two sum_crg.out:</p>
+ 
+<pre>cmp_yf.py sum_crg.out.1 sum_crg.out.2</pre>
+
+<p>to compare two fort.38:</p>
+
+<pre>cmp_yf.py fort.38.1 fort.38.2 -hc 14</pre>
+
+<p>to compare two opp files:</p>
+										<pre>cmp_yf.py file1.opp file2.opp -hl 0 -hc 20 -t 1.0</pre>
+									</blockquote>
+								</blockquote>
+																								<div align="left">
+																									<h4></h4>
+									<h4><a id="prune" name="prune"></a>Prune step2_out.pdb standalone program - by Junjun</h4>
+								</div>
+								<blockquote>
+																									<div align="left">
+																										<p>This program reduces conformers of step2_out.pdb by eliminating &quot;similar&quot; conformers. Similar conformers are defined by geometry, vdw pairwise interaction vector and ele pairwise interaction vector. If the atom distance difference in Angstroms, the vdw and ele pairwise interactions in Kcal/Mole of two conformers are all under the threshold values, then the second conformer is a &quot;similar&quot; conformer and will be deleted. Note any big vdw interaction (&gt; 50) all treated as identical values.</p>
+																										<p><b>Synopsis</b></p>
+									</div>
+									<blockquote>
+																										<div align="left">
+																											<div align="left">
+																												<div align="left">
+																													<div align="left">
+																														<div align="left">
+																															<div align="left">
+																																<div align="left">
+																																	<pre>prune [geometry ele vdw]</pre>
+																																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</blockquote>
+									<div align="left">
+																<div align="left">
+																	<p><b>Description</b></p>
+																</div>
+									</div>
+									<blockquote>
+										<div align="left">
+											<div align="left">
+																		<p>The first line is the threshold values of pruning and the number of deleted conformers. The rest is a mcce pdb file which can be used as a new step2_out.pdb. This program will take a few minutes for a 2000-conformer step2_out.pdb.</p>
+												<p><b>geometry: </b>threshold of geometry difference,  default = 0.5</p>
+												<p><b>ele: </b>threshold of electrostatic pairwise interaction difference, default = 1.0</p>
+												<p><b>vdw: </b>threshold of vdw pairwise interaction difference, default = 8.0. In Monte Carlo sampling the vdw is scaled down by the protein dielectric constant. So 8.0 here is actually 1.0 viewed by Monte Carlo step when epsilon is 8.</p>
+											</div>
+										</div>
+									</blockquote>
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<div align="left">
+																	<p><b>Example</b></p>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<blockquote>
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<p>to prune step2_out.pdb and write the result to a file:</p>
+																<pre>prune 2 1 8 &gt; temp.pdb</pre>
+																<p>to do it with default values</p>
+																<pre>prune &gt; temp.pdb
+</pre>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</blockquote>
+								</blockquote>
+								<div align="left">
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<div align="left">
+																	<div align="left">
+																		<div align="left">
+																			<div align="left">
+																				<div align="left">
+																					<h4></h4>
+																					<h4><a id="cutnmr" name="cutnmr"></a>Divide NMR structures - by Rajesh</h4>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<blockquote>
+									<div align="left">
+										<div align="left">
+											<div align="left">
+												<div align="left">
+													<div align="left">
+														<div align="left">
+															<div align="left">
+																<div align="left">
+																	<div align="left">
+																		<div align="left">
+																			<div align="left">
+																				<div align="left">
+																					<div align="left">
+																						<p>Type the following at unix prompt &nbsp;&quot;perl cutnmr.pl&quot;. It will prompt you for your pdb file that contains many structures. Then it will make individual files out of them.</p>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</blockquote>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+		
+								
+	</body>
+
+</html>

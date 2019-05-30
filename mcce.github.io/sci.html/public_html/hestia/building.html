@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=windows-1252">
+  <title>Multi-Conformer Continuum Electrostatics (MCCE)</title>
+  <style type="text/css">
+<!--
+  .description {
+      font-style : italic;
+      text-decoration : none;
+  }
+
+  .program_and_update {
+      margin-left: 30 px;
+      margin-right: 30 px;
+  }
+.menu { list-style-type: disc; margin-left: 1em }
+.hilight { color: black; background-color: aqua }
+</style>
+</head>
+<body bgcolor="#c8c8f6">
+		<h1><font color="#006666">Hestia (MCCE Server) Resources</font></h1>
+		<hr>
+		<table cellpadding="8" cellspacing="2" border="0"
+ style="text-align: left; width: 100%;">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; width: 25%; font-family: helvetica,arial,sans-serif;" rowspan="2" valign="top" bgcolor="#c8c8f6"><font size="-1" color="#006666">Physical Location: J307<br>
+							Lab: Gunner Lab<br>
+							Department: Physics<br>
+							IP: 134.74.186.110<br>
+							Administrator: <a href="mailto:yw319@nyu.edu">Yanjun Wang</a></font>
+						<hr>
+						<p><font size="-1" color="#006666"> Home</font></p>
+						<ul>
+							<li><font size="-1" color="#006666"><a href="index.html">About Hestia</a></font>
+						</ul>
+						<font size="-1" color="#006666">Policies and Documentation</font>
+						<ul>
+							<li><font size="-1" color="black"><span><a href="accounts.html">Accounts</a></span></font>
+							<li><font size="-1" color="#006666"><a href="diskquota.html">Disk Quota, Backup</a></font>
+							<li><font size="-1" color="#006666"><a href="access.html">Off-campus Access</a></font>
+							<li><font size="-1" color="#006666"><a href="jobscheduler.html">Job Scheduler</a></font>
+							<li><font size="-1" color="#006666"><a href="parallel.html">Parallel Programming</a></font>
+						</ul>
+						<font size="-1" color="#006666">Computing Resources</font>
+						<ul>
+							<li><font size="-1" color="#006666"><a href="mcce.html">MCCE</a></font>
+							<li><font size="-1" color="#006666"><a href="gaussian.html">Gausian98</a></font>
+							<li><font size="-1" color="#006666"><a href="charmm.html">CHARMM</a></font>
+						</ul>
+						<font size="-1" color="#006666">Programming Resources</font>
+						<ul>
+							<li><font size="-1" color="#006666"><a href="compilers.html">Compilers</a></font>
+							<li><font size="-1" color="#006666"><a href="editors.html">Editors</a></font>
+							<li><font size="-1" color="#006666"><a href="debuggers.html">Debuggers</a></font>
+							<li><font size="-1" color="#006666"><a href="optimizers.html">Optimizers</a></font>
+						</ul>
+						<font size="-1" color="#006666">Administration</font>
+						<ul>
+							<li><font size="-1" color="#006666"><span class="hilight">Building Cluster</span></font>
+							<li><font size="-1" color="#006666"><a href="useraccounts.html">User Accounts</a></font>
+							<li><font size="-1" color="#006666"><a href="ganglia.html">Ganglia Monitor (campus)</a></font>
+							<li><font size="-1" color="#006666"><a href="hardware.html">Hardware Health</a></font>
+							<li><font size="-1" color="#006666"><a href="http://134.74.186.110/hestia/private/paperwork.html">Paperwork (Private)</a></font>
+						</ul>
+						<font size="-1" color="#006666">Links</font>
+						<ul>
+							<li><font size="-1" color="#006666"><a href="http://www.eskimo.com/%7escs/C-faq/faq.html">C FAQ</a></font>
+							<li><font size="-1" color="#006666"><a href="http://www.linuxquestions.org">LinuxQuestions</a></font>
+						</ul>
+					</td>
+      <td style="vertical-align: top; text-align: center;" rowspan="2"
+ colspan="1" bgcolor="white">
+						<h2>Building Hestia</h2>
+						<div style="text-align: left;">
+							<h4>Initial installation of the cluster:</h4>
+							<ul>
+								<li>Physically mount the hardware to the rack, and wire the power and network. This process involves the reconfiguration of a power socket to be L6 type to fit the 30Amp-250V-3-leg plug of Smartpro 5000VA UPS.
+								<li>Install RedHat Linux 9 on to the master node. The installation wizard detected no hard disk drive and prompted for driver. Choose &quot;Add&quot; driver option, the program actually found a driver for the LAN (BroadCom), but we still had to add driver for the SCSI interface (Ultra320) from a floppy disk. The CD came with the master node has tools to make such a floppy.
+								<li>Install everything.
+								<li>Copy RPM.
+								<li>Bring up network, eth0 for internet and eth1 for intranet.
+								<li>Download and install Oscar. Include ganglia as additional package but uncheck maui and pbs packages. One needs to power up slave nodes and manually read the MAC address in the process of assigning IP, even though the slave nodes didn't have OS at this time.
+								<li>reconfigure /etc/exports of the master node and /etc/fstab of slave nodes so that NFS shares /home, /disk2, and /disk3 with all nodes.
+								<li>Install and configure condor. This involves a lot of customization on the condor policy so that each node is two virtual machines and mcce jobs would not be suspended and preempted.
+								<li>Create user accounts.
+							</ul>
+							<h4>How to add a node to an existing condor pool:</h4>
+							<p>As sibyl master node often went down, I decided move the sibyl slave nodes into hestia condor pool. Why didn't I cluster the sibyl slave nodes to hestia? That's bacuse OSCAR doesn't support multi-architecture slave nodes. OSCAR requires all slave nodes share one boot image file.</p>
+							<p>Here is the procedure I expanded the condor pool to include sibyl slave nodes. At the end of the process, all sibyl nodes serve as hestia salve nodes, which may accept serial jobs via condor but lack parallel programming support. This is a good compromise in Gunner's Lab as most jobs are serial jobs. The new nodes will be named as node13, node14, ..., node20. </p>
+							<p>The nice thing is hestia and condor on hestia don't need to restart in the process described as following.</p>
+							<ul>
+								<li>Hardware preparation.
+									<ul>
+										<li>The only thing I need to do is to connect the two network switchs.
+									</ul>
+								<li>Network reconfiguration of the master node (hestia).
+									<ul>
+										<li>Pfilter should be reconfigured and restared, otherwise new slave nodes could not mount the file systems master node exports. To do this, find line &quot;%define nodes&quot; in /etc/pfilter.conf and add new nodes in. Then run &quot;/sbin/service pfilter restart&quot; to make changes effective.
+										<li>Edit /etc/hosts to include nodes 13 to 20.
+									</ul>
+								<li>Network reconfiguration of slave nodes (previous sibyl), one node as example.
+									<ul>
+										<li>Configure the network interface: ifconfig eth0 10.0.0.14 netmask 255.255.255.0 broadcast 0.0.0.255. This has to be done locally because the node had a conflicting IP 10.0.0.3 with node3 of hestia. After assigning new IP, the node14 which was node 3 of sibyl can be accessed from hestia master node.
+										<li>Configure hostname: hostname node14
+										<li>Make network change for bootup scripts:<br>
+											/etc/sysconfig/network-script/ifcfg-eth0<br>
+											/etc/sysconfig/network
+										<li>Update /etc/hosts to include nodes 14 to 20. In this file node14 should not be in the same line of localhost, otherwise condor will crash (very hard to debug). The safest thing is to nickname node14 for 10.0.0.14 only.
+										<li>Update /etc/fstab to include /home, /disk2 and /disk3. Also make these mount points under /.
+										<li>Mount NFS:<br>
+											mount /home<br>
+											mount/disk2<br>
+											mount/disk3
+									</ul>
+								<li>Synchronize password to the new slave node:<br>
+									scp /etc/group node14:/etc<br>
+									scp /etc/passwd node14:/etc<br>
+									scp /etc/shadow node14:/etc<br>
+									scp /etc/gshadow node14:/etc<br>
+									Note the last command requires the new password
+								
+								<li>Install condor - master node part
+									
+									<ul>
+										<li>Prepare a the configuration files and directories for the new node. As we want to make the condor configuration as consistant as possible, we stick on the exactly same mechanism as what we have on hestia. One problem is we have to run the condor_install that was released for RH7.3 and glibc2.2 architecture for the new slave node. The individual installation on the new slave node has to be limited to install the binaries only, and the configuration files will be manually created on the master node.
+										
+										<li>Backup condor_config. Go to /home/condor, cp condor_config to condor_config.bak
+										
+										<li>Make node specific directory. Go to /home/condor/hosts, cp -r node2 node14. This creates a copy of node2. Then go to /home/condor/hosts/node14, remove everything under directory excute, log and spool.
+										
+										<li>Update local config file. Under /home/condor/hosts/node14, rename file node2.local to node14.local, and copy /home/condor/condor_config to condor_config.local under node14 directory. Change file condor_config.local line RELEASE_DIR from /home/condor to /usr/local/condor. This is because the RH7.3/glibc2.2 condor binaries have to locate at a different place and recognized by this sepcific node. In another word, we are going to install node specific condor to mix nodes with different OS. Remember the condor_release location /usr/local/condor is the location of slave node 14. Another line needs to be updated is MEMORY, make it 2016.
+										<li>Change ownership of the node14 directory and the subdirectory to condor. 
+									</ul>
+								<li>Install condor - slave node part
+									<ul>
+										<li>Go to slave node 14 /root directory, get a copy of condor distribution 6.6.6 or 6.7 for RH7.3/glibc2.2. Aviod doing this under /home/condor because this directory is for hestial original nodes.
+										<li>Run condor_install full installation for one machine only. Point condor release directory to /usr/local/condor. Do not allow the installation to make any soft link.  However this installation will overwrite /home/condor/condor_config when it detects a user directory condor exists. If this happens, just copy the condor_config.bak back to condor_config.
+										<li>For the above step, one can take advantage of the previous successful installation on node 13. Run scp -r node13:/usr/local/condor /usr/local to create condor release directory.
+										<li>Sometimes, I need to change the owner of /var/lock/condor to condor.
+									
+										<li>Start condor. Run /usr/local/condor_sbin/condor_master.
+									</ul>
+								<li>Post-installation
+									<ul>
+										<li>Edit the condor_start, condor_stop and condor_restart scripts.
+									</ul>
+								
+							</ul>
+						</div>
+					</td>
+    </tr>
+    <tr style="font-family: helvetica,arial,sans-serif;">
+					
+				</tr>
+  </tbody>
+</table>
+		<hr>
+		<p align="center"><i><font color="#006666">Last Updated: 11/10/2004, Gunner Lab, City College of New York, 2004</font></i></p>
+</body>
+</html>

@@ -1,0 +1,7 @@
+AuthName        "Private Page"
+AuthType        Basic
+AuthUserFile    /var/www/secret/.htpasswd
+
+<Limit GET POST>
+require         valid-user
+</Limit>

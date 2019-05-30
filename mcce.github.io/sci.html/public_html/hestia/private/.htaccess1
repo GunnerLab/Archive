@@ -1,0 +1,7 @@
+AuthName "Private Documents on Hestia"
+AuthType Basic
+AuthUserFile /var/www/secret/.htpasswd
+
+<Limit GET POST>
+require  valid-user
+</Limit>

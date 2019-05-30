@@ -1,0 +1,6 @@
+<map id="GRID" name="GRID">
+<area shape="rect" id="node2" href="$structVECTOR.html" title="VECTOR" alt="" coords="27,5,105,32"/>
+<area shape="rect" id="node3" href="$structCONF.html" title="CONF" alt="" coords="36,216,96,243"/>
+<area shape="rect" id="node4" href="$structATOM__STRUCT.html" title="ATOM_STRUCT" alt="" coords="127,111,250,137"/>
+<area shape="rect" id="node5" href="$structINT__VECT.html" title="INT_VECT" alt="" coords="120,216,207,243"/>
+</map>

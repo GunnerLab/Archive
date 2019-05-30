@@ -1,0 +1,11 @@
+<map id="PROT" name="PROT">
+<area shape="rect" id="node2" href="$structUNIQ__STATE.html" title="UNIQ_STATE" alt="" coords="5,621,112,648"/>
+<area shape="rect" id="node3" href="$structGROUP__STRUCT.html" title="GROUP_STRUCT" alt="" coords="199,621,332,648"/>
+<area shape="rect" id="node4" href="$structRES__STRUCT.html" title="RES_STRUCT" alt="" coords="373,488,485,515"/>
+<area shape="rect" id="node5" href="$structVECTOR.html" title="VECTOR" alt="" coords="405,5,483,32"/>
+<area shape="rect" id="node6" href="$structCONF.html" title="CONF" alt="" coords="311,203,371,229"/>
+<area shape="rect" id="node7" href="$structATOM__STRUCT.html" title="ATOM_STRUCT" alt="" coords="383,111,505,137"/>
+<area shape="rect" id="node9" href="$structSUBRES.html" title="SUBRES" alt="" coords="302,339,381,365"/>
+<area shape="rect" id="node8" href="$structISTATES.html" title="ISTATES" alt="" coords="199,339,278,365"/>
+<area shape="rect" id="node10" href="$structSTATE.html" title="STATE" alt="" coords="234,488,299,515"/>
+</map>

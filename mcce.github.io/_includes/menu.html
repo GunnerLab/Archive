@@ -1,0 +1,22 @@
+<nav {% if site.reverse == true %}id="nav-left"{% else %}id="nav"{% endif %}>
+	<div id="nav-list">
+		<a href="{{ site.baseurl }}"><i class="fa fa-home" aria-hidden="true"></i> HOME</a>
+		<a href="{{ site.baseurl }}"><i class="fa fa-home" aria-hidden="true"></i> RESEARCH</a>	
+		<a href="members"><i class="fa fa-home" aria-hidden="true"></i> MEMBERS</a>
+		<a href="{{ site.baseurl }}"><i class="fa fa-home" aria-hidden="true"></i> PUBLICATIONS</a>
+		<a href="{{ site.baseurl }}"><i class="fa fa-home" aria-hidden="true"></i> INSTALL</a>
+		<a href="html/index.html"><i class="fa fa-home" aria-hidden="true"></i> MANUAL</a>
+		<a href="{{ site.baseurl }}"><i class="fa fa-home" aria-hidden="true"></i> BLOG</a>
+		<!-- Nav pages -->
+	  {% for page in site.pages %}
+	    {% if page.layout == "page" %}
+	      <a href="{{ page.url }}" title="{{ page.title }}">{{ page.title }}</a>
+	    {% endif %}
+			
+
+	  {% endfor %}
+
+	</div>
+  
+
+</nav>

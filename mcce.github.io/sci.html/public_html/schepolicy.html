@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Crebeo Computing Policy</title>
+<style type="text/css">
+<!--
+.style1 {font-size: larger}
+.style5 {font-family: Courier, "Monotype Sorts"; font-size: smaller; }
+.style6 {color: #000099}
+-->
+</style>
+</head>
+
+<body>
+<h1 align="center">Running Jobs on Crebeo</h1>
+<div align="center"><span class="style6">Good-&gt; Your can run jobs on all nodes &lt;-Bad<br>
+  Bad-&gt; You have to change &lt;-Good<br>
+  <span class="style1">Your view?</span></span><br>
+  Send comments to<em> <span class="style1">jmao@levdec.engr.ccny.cuny.edu</span></em>
+</div>
+<hr>
+<h2 align="left">1. Job cleaning policy</h2>
+<p>To ensure  the efficient use of Crebeo computing resources and maintain the health of the system, jobs that have been running over 7 days will be reported to the job owner and system administrator, and jobs at zombie state will be removed immediately by system cleaning tool.</p>
+<p>You are encouraged to break a big calculation into small pieces that can finish within 7 days, or programs that can resume from a saved state. </p>
+<h2>2. Types of jobs</h2>
+<p>Crebeo recommends running computation-intensive jobs with Condor job scheduler. Users are encouraged to submit jobs with Condor from master node. Direct logins and running jobs on computing nodes  are subjected to priority degradation.</p>
+<p>While most of the computing nodes are reserved for computation-intensive jobs, some nodes are open to interactive jobs and testing jobs.</p>
+<p><u>Computation-intensive jobs</u> are programs that can be left running on computing nodes with minimal supervision. These jobs usually take minutes to days to complete</p>
+<p><u>Interactive jobs</u> are most of UNIX shell commands and programs with graphic user interfaces. These jobs interact with users during run time.</p>
+<p><u>Testing job</u>s are programs underdevelopment. Developer needs to launch the test/debug codes immediately to reduce cycle time of development.&nbsp; </p>
+<h2>3. Reserved nodes</h2>
+<p>The following nodes are open to all users. </p>
+<ul>
+  <li>Master1 is open for user login, job submission, compiling serial jobs, and running interactive programs MatLab and Mathematica. </li>
+  <li>Node41 is open for compiling and testing MPI programs, and running Fluent and Evolver.</li>
+  <li>Node42 is open for testing MPI programs and running Fluent and Evolver.</li>
+</ul>
+<p>Other nodes are restricted to regular users. Condor jobs are given highest priority on the reserved computing nodes. There is no need to login to these nodes.</p>
+<ul>
+  <li>Master2 is file server and license server, and no login is granted to regular users. </li>
+  <li>Node1 to node 40 are reserved for Condor serial jobs.</li>
+  <li>Node 43 to node 81 are available for both serial jobs and  MPI jobs, but prefer MPI jobs. </li>
+</ul>
+<h2>4. Submitting jobs with Job Scheduler</h2>
+<p><a href="https://www.cs.wisc.edu/condor/">Condor</a> is a distributed job scheduler developed by the computer science department at Univ. of Wisconsin &ndash; Madison. It is used by most computing centers affiliated with <a href="http://www.teragrid.org/">TeraGrid Project</a>.</p>
+<p>Crebeo master node is where you submit all jobs to the scheduler. Submitting a job is telling Condor a description file by command:</p>
+<blockquote>
+  <pre>condor_submit descriptionfile</pre>
+</blockquote>
+<p>The essential entries of a description file are the path of executable and the location of the working directory. For more detailed explanations on condor description file, visit <a href="http://www.sci.ccny.cuny.edu/~jmao/condor.html">&ldquo;Condor in 5 Min&rdquo;</a> . Two example description files are prepared for submitting serial jobs and MPI job on Crebeo:</p>
+<p>Example 1, a batch of serial jobs</p>
+<blockquote>
+  <pre>#####
+# Submit a batch of two serial jobs on crebeo
+#####
+# Section you do not want to edit
+universe = Vanilla
+output = run.out
+error = condor.err
+log = condor.log
+getenv = True
+#####
+
+# Please customize following entries for your need
+
+
+executable = /home2/jmao/condor_test/prime.py
+#arguments =
+
+
+initialdir = /home2/jmao/condor_test/run_1
+queue
+
+
+initialdir = /home2/jmao/condor_test/run_2
+queue
+
+
+### End of description file ###
+
+</pre>
+</blockquote>
+<p>
+Example 2, a MPI job</p>
+<blockquote>
+  <pre>#####
+# Submit one MPI on crebeo
+#####
+# Section you do not want to edit
+universe = Parallel
+executable = /home2/condor/bin/mpiscript
+Requirements = ((Arch == &quot;x86_64&quot;) &amp;&amp; (LoadAvg &lt; 0.5))
+Output = run.out.$(NODE)
+Error = condor.err.$(NODE)
+Log = condor.log
+#####
+
+# Please customize following entries for your need
+arguments = your_linked_mpi_program
+machine_count = 8
+
+queue
+### End of description file ###</pre>
+</blockquote>
+<p>In the above examples, the &ldquo;universe&rdquo; line tells scheduler to handle the jobs differently. Serial jobs will start as soon as a node is available, but MPI jobs will wait until the number of available nodes matches &ldquo;machine_count&rdquo;.&nbsp; While the first example tells the scheduler the location of working directory explicitly by &ldquo;initialdir&rdquo;, the second example assumes the working directory is where you run &ldquo;condor_submit&rdquo; command.</p>
+<p>Condor may take up to 5 minutes to start your jobs even when the resources are actually available. This is due to the job negotiation, load averaging and cleaning up mechanisms of the job scheduler.</p>
+<p>After the job submission, the following commands are often used to monitor and manage the queue. In these commands, &ldquo;user&rdquo; is the user login name, cluster is the batch number returned by &ldquo;condor_q&rdquo;, process is the sequence number of a job in a cluster which is also returned by &ldquo;condor_q&rdquo;.</p>
+<table width="100%" border="1">
+  <tr align="left" valign="top">
+    <td><strong><em> Category</em></strong></td>
+    <td><strong><em> Command</em></strong></td>
+    <td><strong><em> Command Option/Arguments</em></strong></td>
+    <td align="left" valign="top"><strong><em> Description</em></strong></td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td>Submit job</td>
+    <td><span class="style5"> condor_submit </span></td>
+    <td><span class="style5"> descriptionfile </span></td>
+    <td align="left"> Submit a job </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td rowspan="3"> Monitor Progress </td>
+    <td class="style5"> condor_status </td>
+    <td class="style5">&nbsp;</td>
+    <td align="left"> Display the jobs in the queue</td>
+  </tr>
+  <tr>
+    <td rowspan="2" class="style5"> condor_q </td>
+    <td align="left" class="style5"> User </td>
+    <td align="left"> Display the jobs in the queue submitted by this user </td>
+  </tr>
+  <tr>
+    <td class="style5"> -analyze </td>
+    <td align="left"> Inquire resources for the queued jobs</td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td rowspan="9"> Edit Queue </td>
+    <td rowspan="3" class="style5"> condor_hold </td>
+    <td class="style5"> User </td>
+    <td align="left"> Put jobs of this user into hold state </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster </td>
+    <td align="left"> Put jobs of this cluster into hold state </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster.process </td>
+    <td align="left"> Put specific job into the hold state </td>
+  </tr>
+  <tr>
+    <td rowspan="3" class="style5"> condor_release </td>
+    <td class="style5"> User </td>
+    <td align="left"> Release jobs of the user </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster </td>
+    <td align="left"> Release a job cluster </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster.process </td>
+    <td align="left"> Release specified job </td>
+  </tr>
+  <tr>
+    <td rowspan="3" class="style5"> condor_rm </td>
+    <td class="style5"> User</td>
+    <td align="left"> Remove queued jobs of the user </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster </td>
+    <td align="left"> Remove queued job cluster </td>
+  </tr>
+  <tr>
+    <td class="style5"> Cluster.process </td>
+    <td align="left"> Remove queued job </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td rowspan="3"> Review Completed Jobs </td>
+    <td rowspan="3" class="style5"> condor_history </td>
+    <td class="style5">&nbsp;</td>
+    <td align="left"> View log of condor jobs completed to date </td>
+  </tr>
+  <tr>
+    <td class="style5"> User </td>
+    <td align="left"> View completed jobs of this user </td>
+  </tr>
+  <tr>
+    <td class="style5"> -l </td>
+    <td align="left"> Detailed review mode </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td> Adjust job priority </td>
+    <td class="style5"> condor_prio </td>
+    <td class="style5"> (+|-|-p) value Cluster.process</td>
+    <td align="left"> Increase/Decrease/Set job priority for a job. The job priority ranges from &ndash;20 to +20 and the default value is 0. </td>
+  </tr>
+</table>
+<h2>5. Some useful command combinations:</h2>
+<p>To check the working directory of a job in the queue: </p>
+<blockquote>
+  <pre>condor_q (to get cluster and process number)
+condor_q &ndash;l Cluster.process | grep Iwd</pre>
+</blockquote>
+<p> To check the working directory of a finished job: </p>
+<blockquote>
+  <pre>condor_history (to get cluster and process number)
+condor_history &ndash;l Cluster.process | grep Iwd </pre>
+</blockquote>
+<p>Jobs removed by condor_rm might get stuck with state &ldquo;X&rdquo; in condor_q. If state &quot;X&quot; doesn't go away in 10 minutes, the following command will force the removal of these jobs: </p>
+<blockquote>
+  <pre>condor_rm -forcex job_id
+</pre>
+</blockquote>
+<p>&nbsp;</p>
+</body>
+</html>
